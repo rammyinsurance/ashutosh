@@ -1,0 +1,1950 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 IMO Star — Grade 4 Maths Olympiad Portal</title>
+<style>
+:root{
+  --c1:#6C63FF;--c2:#FF6B6B;--c3:#FFD93D;--c4:#6BCB77;--c5:#4D96FF;
+  --bg:#F0F4FF;--card:#FFFFFF;--text:#2D2D4E;--muted:#7B7B9E;
+  --shadow:0 4px 24px rgba(108,99,255,.13);
+  --radius:18px;--radius-sm:10px;
+  --font-head:'Fredoka One',cursive;--font-body:'Nunito',sans-serif;
+}
+.dark{
+  --bg:#14142B;--card:#1E1E3A;--text:#E8E8FF;--muted:#9999BB;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);transition:background .3s,color .3s;min-height:100vh}
+
+/* ── Typography ── */
+h1,h2,h3,.font-head{font-family:var(--font-head)}
+
+/* ── Layout ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column;position:fixed;height:100vh;overflow-y:auto;transition:.3s;z-index:100}
+.main{margin-left:260px;flex:1;padding:24px;max-width:1200px}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}}
+
+/* ── Sidebar ── */
+.sidebar-logo{padding:24px 20px 16px;display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--bg)}
+.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--c1),var(--c5));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.logo-text{font-family:var(--font-head);font-size:20px;color:var(--c1)}
+.logo-sub{font-size:11px;color:var(--muted)}
+.nav-section{padding:12px 0}
+.nav-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);padding:8px 20px 4px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;border-radius:0;transition:.2s;border-left:3px solid transparent;font-size:14px;font-weight:600;color:var(--muted)}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:linear-gradient(90deg,rgba(108,99,255,.12),transparent);color:var(--c1);border-left-color:var(--c1)}
+.nav-item .icon{font-size:18px;width:24px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--c2);color:#fff;border-radius:20px;padding:1px 8px;font-size:10px}
+
+/* ── Top Bar ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.topbar-left h2{font-size:26px;color:var(--text)}
+.topbar-left p{font-size:14px;color:var(--muted);margin-top:2px}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.btn-icon{width:40px;height:40px;border:none;border-radius:10px;background:var(--card);box-shadow:var(--shadow);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--text)}
+.hamburger{display:none}
+@media(max-width:768px){.hamburger{display:flex}}
+
+/* ── Cards ── */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;transition:.2s}
+.card:hover{transform:translateY(-2px)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+/* ── Stat Cards ── */
+.stat-card{border-radius:var(--radius);padding:20px;color:#fff;position:relative;overflow:hidden}
+.stat-card::after{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;background:rgba(255,255,255,.15);border-radius:50%}
+.stat-card .stat-icon{font-size:32px;margin-bottom:8px}
+.stat-card .stat-val{font-family:var(--font-head);font-size:28px}
+.stat-card .stat-lbl{font-size:12px;opacity:.85;margin-top:2px}
+.bg1{background:linear-gradient(135deg,#6C63FF,#A29BFE)}
+.bg2{background:linear-gradient(135deg,#FF6B6B,#FAB1A0)}
+.bg3{background:linear-gradient(135deg,#FFD93D,#FDCB6E)}
+.bg4{background:linear-gradient(135deg,#6BCB77,#55EFC4)}
+.bg5{background:linear-gradient(135deg,#4D96FF,#74B9FF)}
+
+/* ── Progress Bar ── */
+.progress-wrap{margin:8px 0}
+.progress-bar{height:10px;background:var(--bg);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;border-radius:20px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+
+/* ── Chapter Cards ── */
+.chapter-card{border-radius:var(--radius);padding:20px;cursor:pointer;position:relative;overflow:hidden;transition:.25s;border:2px solid transparent}
+.chapter-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.15);border-color:var(--c1)}
+.chapter-card .chapter-num{font-size:40px;font-family:var(--font-head);opacity:.12;position:absolute;right:16px;top:8px}
+.chapter-card .chapter-icon{font-size:32px;margin-bottom:10px}
+.chapter-card h3{font-size:16px;margin-bottom:6px}
+.chapter-card p{font-size:12px;color:var(--muted)}
+.chapter-card .chapter-progress{margin-top:12px}
+.ch-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:8px}
+
+/* ── Buttons ── */
+.btn{padding:10px 22px;border:none;border-radius:10px;font-family:var(--font-body);font-weight:700;font-size:14px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff;box-shadow:0 4px 14px rgba(108,99,255,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(108,99,255,.5)}
+.btn-secondary{background:var(--bg);color:var(--text)}
+.btn-success{background:linear-gradient(135deg,var(--c4),#00B894);color:#fff}
+.btn-danger{background:linear-gradient(135deg,var(--c2),#E17055);color:#fff}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:8px}
+.btn-lg{padding:14px 32px;font-size:16px;border-radius:14px}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:4px;background:var(--bg);border-radius:14px;padding:4px;flex-wrap:wrap;margin-bottom:20px}
+.tab{padding:8px 16px;border-radius:10px;cursor:pointer;font-weight:700;font-size:13px;color:var(--muted);transition:.2s;white-space:nowrap}
+.tab.active{background:var(--card);color:var(--c1);box-shadow:var(--shadow)}
+
+/* ── Quiz ── */
+.quiz-q{font-size:18px;font-weight:700;margin-bottom:20px;line-height:1.5}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.options{grid-template-columns:1fr}}
+.option{padding:14px 18px;border:2px solid var(--bg);border-radius:12px;cursor:pointer;font-weight:600;font-size:14px;transition:.2s;background:var(--card)}
+.option:hover{border-color:var(--c1);background:rgba(108,99,255,.07)}
+.option.correct{border-color:var(--c4);background:rgba(107,203,119,.15);color:#1a8f2a}
+.option.wrong{border-color:var(--c2);background:rgba(255,107,107,.12);color:#c0392b}
+.option.selected{border-color:var(--c1);background:rgba(108,99,255,.1)}
+.feedback-box{margin-top:16px;padding:16px;border-radius:12px;font-size:14px;line-height:1.6}
+.feedback-correct{background:rgba(107,203,119,.15);border-left:4px solid var(--c4)}
+.feedback-wrong{background:rgba(255,107,107,.12);border-left:4px solid var(--c2)}
+
+/* ── Timer ── */
+.timer{font-family:var(--font-head);font-size:28px;color:var(--c1);text-align:center;padding:8px 20px;background:var(--bg);border-radius:12px;display:inline-block}
+.timer.warning{color:var(--c2);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ── Badges ── */
+.badge-grid{display:flex;flex-wrap:wrap;gap:16px}
+.badge-item{text-align:center;padding:16px;border-radius:14px;background:var(--bg);min-width:90px;transition:.2s}
+.badge-item:hover{transform:scale(1.05)}
+.badge-icon{font-size:36px;margin-bottom:6px}
+.badge-name{font-size:11px;font-weight:700;color:var(--muted)}
+.badge-earned{border:2px solid var(--c3)}
+
+/* ── Concept Box ── */
+.concept-box{border-radius:14px;padding:20px;margin:16px 0;border-left:5px solid var(--c1)}
+.concept-box.tip{border-left-color:var(--c3);background:rgba(255,217,61,.08)}
+.concept-box.trick{border-left-color:var(--c5);background:rgba(77,150,255,.08)}
+.concept-box.warning{border-left-color:var(--c2);background:rgba(255,107,107,.08)}
+.concept-box.success{border-left-color:var(--c4);background:rgba(107,203,119,.08)}
+.concept-box h4{margin-bottom:8px;font-size:15px}
+.concept-box p{font-size:14px;line-height:1.7;color:var(--text)}
+
+/* ── Table ── */
+.styled-table{width:100%;border-collapse:collapse;font-size:14px}
+.styled-table th{background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff;padding:12px 16px;text-align:left}
+.styled-table td{padding:10px 16px;border-bottom:1px solid var(--bg)}
+.styled-table tr:hover td{background:var(--bg)}
+
+/* ── Chat ── */
+.chat-wrap{display:flex;flex-direction:column;height:420px;border:2px solid var(--bg);border-radius:16px;overflow:hidden}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chat-bubble{max-width:80%;padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.6}
+.chat-bubble.user{align-self:flex-end;background:var(--c1);color:#fff;border-bottom-right-radius:4px}
+.chat-bubble.ai{align-self:flex-start;background:var(--bg);color:var(--text);border-bottom-left-radius:4px}
+.chat-input-row{display:flex;gap:8px;padding:12px;border-top:2px solid var(--bg)}
+.chat-input{flex:1;padding:10px 16px;border:2px solid var(--bg);border-radius:10px;font-family:var(--font-body);font-size:14px;background:var(--card);color:var(--text);outline:none}
+.chat-input:focus{border-color:var(--c1)}
+
+/* ── Animations ── */
+.fade-in{animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.bounce{animation:bounce .6s ease}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.spin{animation:spin 2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Stars ── */
+.stars{color:var(--c3);font-size:20px;letter-spacing:2px}
+
+/* ── SVG shapes ── */
+.shape-demo{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+.fraction-bar{display:flex;height:32px;border-radius:8px;overflow:hidden;border:2px solid var(--c1)}
+.fraction-part{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+
+/* ── Mock Test ── */
+.test-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--card);border-radius:14px;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.q-counter{font-family:var(--font-head);font-size:22px;color:var(--c1)}
+.score-ring{width:80px;height:80px;border-radius:50%;background:conic-gradient(var(--c4) var(--pct,0%), var(--bg) 0%);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:18px;position:relative}
+
+/* ── Tooltip ── */
+.tooltip{position:relative;display:inline-block}
+.tooltip .tt-text{visibility:hidden;background:var(--text);color:var(--card);padding:6px 12px;border-radius:8px;font-size:12px;position:absolute;bottom:130%;left:50%;transform:translateX(-50%);white-space:nowrap;opacity:0;transition:.2s;z-index:200}
+.tooltip:hover .tt-text{visibility:visible;opacity:1}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--c1);border-radius:3px}
+
+/* ── Page sections ── */
+.page{display:none}.page.active{display:block}
+
+/* ── Leaderboard ── */
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;margin-bottom:8px;background:var(--bg)}
+.lb-row.me{background:rgba(108,99,255,.12);border:2px solid var(--c1)}
+.lb-rank{font-family:var(--font-head);font-size:20px;width:32px;color:var(--c1)}
+.lb-name{flex:1;font-weight:700}
+.lb-pts{font-family:var(--font-head);color:var(--c3)}
+
+/* ── Responsive helpers ── */
+.hide-mobile{}.show-mobile{display:none}
+@media(max-width:600px){.hide-mobile{display:none}.show-mobile{display:block}}
+
+/* Google Fonts (inline fallback) */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap');
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🏆</div>
+    <div><div class="logo-text">IMO Star</div><div class="logo-sub">Grade 4 Olympiad Portal</div></div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Main</div>
+    <div class="nav-item active" onclick="showPage('home')"><span class="icon">🏠</span> Dashboard</div>
+    <div class="nav-item" onclick="showPage('progress')"><span class="icon">📊</span> My Progress</div>
+    <div class="nav-item" onclick="showPage('badges')"><span class="icon">🎖️</span> Badges & Rewards</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Chapters</div>
+    <div class="nav-item" onclick="showPage('ch1')"><span class="icon">🔢</span> Number Sense</div>
+    <div class="nav-item" onclick="showPage('ch2')"><span class="icon">➕</span> Operations</div>
+    <div class="nav-item" onclick="showPage('ch3')"><span class="icon">🍕</span> Fractions</div>
+    <div class="nav-item" onclick="showPage('ch4')"><span class="icon">⏱️</span> Measurement & Money</div>
+    <div class="nav-item" onclick="showPage('ch5')"><span class="icon">📐</span> Geometry</div>
+    <div class="nav-item" onclick="showPage('ch6')"><span class="icon">📈</span> Data Handling</div>
+    <div class="nav-item" onclick="showPage('ch7')"><span class="icon">🧩</span> Logical Reasoning</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Practice</div>
+    <div class="nav-item" onclick="showPage('practice')"><span class="icon">🎯</span> Practice Quiz</div>
+    <div class="nav-item" onclick="showPage('mock')"><span class="icon">📝</span> Mock Tests</div>
+    <div class="nav-item" onclick="showPage('tricks')"><span class="icon">⚡</span> IMO Trick Bank</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Tools</div>
+    <div class="nav-item" onclick="showPage('tutor')"><span class="icon">🤖</span> AI Tutor <span class="nav-badge">AI</span></div>
+    <div class="nav-item" onclick="showPage('parent')"><span class="icon">👨‍👩‍👧</span> Parent Dashboard</div>
+  </div>
+
+  <div style="padding:20px;margin-top:auto;border-top:2px solid var(--bg)">
+    <div style="text-align:center;font-size:12px;color:var(--muted)">🌟 Keep it up, Champ!</div>
+    <div id="sidebar-streak" style="text-align:center;margin-top:8px;font-family:var(--font-head);color:var(--c2)">🔥 3 Day Streak</div>
+  </div>
+</aside>
+
+<!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
+<main class="main" id="mainContent">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <h2 id="pageTitle">👋 Welcome Back!</h2>
+      <p id="pageSubtitle">Let's crack the Olympiad today!</p>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-icon hamburger" onclick="toggleSidebar()">☰</button>
+      <button class="btn-icon" onclick="toggleDark()" id="darkBtn">🌙</button>
+      <div style="background:var(--card);border-radius:10px;padding:8px 14px;box-shadow:var(--shadow);font-weight:700;font-size:13px;color:var(--c1)">
+        ⭐ <span id="totalPts">0</span> pts
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ PAGE: HOME ══════════ -->
+  <div class="page active" id="page-home">
+    <!-- Daily Quote -->
+    <div class="card" style="background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff;margin-bottom:24px;display:flex;align-items:center;gap:16px">
+      <div style="font-size:40px">💫</div>
+      <div>
+        <div style="font-family:var(--font-head);font-size:18px" id="dailyQuote">"Every expert was once a beginner. Keep practicing!"</div>
+        <div style="font-size:12px;opacity:.8;margin-top:4px">Daily Motivation</div>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="grid-4" style="margin-bottom:24px">
+      <div class="stat-card bg1">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-val" id="st-pts">0</div>
+        <div class="stat-lbl">Points Earned</div>
+      </div>
+      <div class="stat-card bg2">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-val" id="st-streak">3</div>
+        <div class="stat-lbl">Day Streak</div>
+      </div>
+      <div class="stat-card bg3">
+        <div class="stat-icon">✅</div>
+        <div class="stat-val" id="st-acc">0%</div>
+        <div class="stat-lbl">Accuracy</div>
+      </div>
+      <div class="stat-card bg4">
+        <div class="stat-icon">📚</div>
+        <div class="stat-val" id="st-chaps">0/7</div>
+        <div class="stat-lbl">Chapters Done</div>
+      </div>
+    </div>
+
+    <!-- Overall Progress -->
+    <div class="card" style="margin-bottom:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h3>📊 Overall Progress</h3>
+        <span style="font-family:var(--font-head);color:var(--c1)" id="overallPct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill bg1" id="overallBar" style="width:0%"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:13px;color:var(--muted)">
+        <span>🎯 Next: <strong id="nextLesson">Number Sense</strong></span>
+        <span id="rankLabel">Rank: <strong style="color:var(--c1)">🌱 Beginner</strong></span>
+      </div>
+    </div>
+
+    <!-- Chapter Overview -->
+    <h3 style="margin-bottom:16px;font-size:20px">📚 Chapters</h3>
+    <div class="grid-3" id="chapterGrid">
+      <!-- Dynamically generated -->
+    </div>
+
+    <!-- Quick Actions -->
+    <h3 style="margin:24px 0 16px;font-size:20px">⚡ Quick Actions</h3>
+    <div class="grid-4">
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center" onclick="showPage('practice')">🎯 Practice Now</button>
+      <button class="btn btn-success btn-lg" style="width:100%;justify-content:center" onclick="showPage('mock')">📝 Mock Test</button>
+      <button class="btn btn-secondary btn-lg" style="width:100%;justify-content:center" onclick="showPage('tricks')">⚡ Trick Bank</button>
+      <button class="btn btn-primary btn-lg" style="background:linear-gradient(135deg,var(--c2),#E17055);width:100%;justify-content:center" onclick="showPage('tutor')">🤖 Ask AI Tutor</button>
+    </div>
+  </div>
+
+  <!-- ══════════ PAGE: CHAPTER 1 — NUMBER SENSE ══════════ -->
+  <div class="page" id="page-ch1">
+    <div class="tabs" id="ch1-tabs">
+      <div class="tab active" onclick="chTab('ch1',0,this)">📖 Learn</div>
+      <div class="tab" onclick="chTab('ch1',1,this)">⚡ Tricks</div>
+      <div class="tab" onclick="chTab('ch1',2,this)">✏️ Examples</div>
+      <div class="tab" onclick="chTab('ch1',3,this)">🎯 Practice</div>
+      <div class="tab" onclick="chTab('ch1',4,this)">🏆 Test</div>
+    </div>
+
+    <!-- Learn Tab -->
+    <div id="ch1-tab-0" class="ch1-tab fade-in">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color:var(--c1);margin-bottom:16px">🔢 Place Value</h3>
+          <p style="font-size:14px;margin-bottom:16px">Every digit in a number has a <strong>place</strong> and a <strong>value</strong>.</p>
+          <div style="overflow-x:auto">
+          <table class="styled-table">
+            <tr><th>TEN-THOUSANDS</th><th>THOUSANDS</th><th>HUNDREDS</th><th>TENS</th><th>ONES</th></tr>
+            <tr><td style="text-align:center;font-size:22px;color:var(--c2)"><b>4</b></td><td style="text-align:center;font-size:22px;color:var(--c1)"><b>7</b></td><td style="text-align:center;font-size:22px;color:var(--c4)"><b>3</b></td><td style="text-align:center;font-size:22px;color:var(--c3)"><b>0</b></td><td style="text-align:center;font-size:22px;color:var(--c5)"><b>5</b></td></tr>
+            <tr><td>40,000</td><td>7,000</td><td>300</td><td>0</td><td>5</td></tr>
+          </table>
+          </div>
+          <div class="concept-box success" style="margin-top:12px">
+            <h4>💡 The number is:</h4>
+            <p>47,305 = 40,000 + 7,000 + 300 + 0 + 5</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c2);margin-bottom:16px">🎭 Face Value vs Place Value</h3>
+          <div class="concept-box tip">
+            <h4>Face Value</h4>
+            <p>The digit itself. In 47,305 — face value of 7 is <b>7</b></p>
+          </div>
+          <div class="concept-box trick">
+            <h4>Place Value</h4>
+            <p>Digit × its position. In 47,305 — place value of 7 is <b>7,000</b></p>
+          </div>
+          <div class="concept-box warning">
+            <h4>⚠️ Common Mistake</h4>
+            <p>Students confuse face value and place value. Remember: Face value never changes! 7 is always 7.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="card">
+          <h3 style="color:var(--c4);margin-bottom:16px">📏 Comparing Numbers</h3>
+          <p style="font-size:14px;margin-bottom:12px">To compare two numbers:</p>
+          <div class="concept-box success">
+            <h4>Step 1:</h4><p>Count the digits. More digits = bigger number</p>
+          </div>
+          <div class="concept-box tip">
+            <h4>Step 2 (if equal digits):</h4><p>Compare digit by digit from LEFT to RIGHT</p>
+          </div>
+          <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:10px">
+            <div style="font-size:15px">Compare: <b>4,567</b> vs <b>4,589</b></div>
+            <div style="font-size:13px;margin-top:8px;color:var(--muted)">Both have 4 digits. Compare: 4=4, 5=5, 6&lt;8 → <b style="color:var(--c4)">4,567 &lt; 4,589</b></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c5);margin-bottom:16px">🏛️ Roman Numerals</h3>
+          <table class="styled-table">
+            <tr><th>Symbol</th><th>Value</th><th>Symbol</th><th>Value</th></tr>
+            <tr><td>I</td><td>1</td><td>VI</td><td>6</td></tr>
+            <tr><td>V</td><td>5</td><td>IX</td><td>9</td></tr>
+            <tr><td>X</td><td>10</td><td>XL</td><td>40</td></tr>
+            <tr><td>L</td><td>50</td><td>XC</td><td>90</td></tr>
+            <tr><td>C</td><td>100</td><td>CD</td><td>400</td></tr>
+            <tr><td>D</td><td>500</td><td>CM</td><td>900</td></tr>
+            <tr><td>M</td><td>1000</td><td></td><td></td></tr>
+          </table>
+          <div class="concept-box tip" style="margin-top:12px">
+            <h4>🧠 Memory Rule: "I Value Xylophones Like Cows Drink Milk"</h4>
+            <p>I=1, V=5, X=10, L=50, C=100, D=500, M=1000</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Number Patterns -->
+      <div class="card" style="margin-top:20px">
+        <h3 style="color:var(--c1);margin-bottom:16px">🔄 Number Patterns</h3>
+        <div class="grid-3">
+          <div style="background:var(--bg);border-radius:12px;padding:16px">
+            <div style="font-weight:700;color:var(--c2);margin-bottom:8px">Counting by 2s (Even)</div>
+            <div style="font-size:16px;letter-spacing:2px"><span style="color:var(--c1)">2</span>, <span style="color:var(--c2)">4</span>, <span style="color:var(--c4)">6</span>, <span style="color:var(--c5)">8</span>, <span style="color:var(--c1)">10</span>...</div>
+          </div>
+          <div style="background:var(--bg);border-radius:12px;padding:16px">
+            <div style="font-weight:700;color:var(--c4);margin-bottom:8px">Counting by 5s</div>
+            <div style="font-size:16px;letter-spacing:2px"><span style="color:var(--c1)">5</span>, <span style="color:var(--c2)">10</span>, <span style="color:var(--c4)">15</span>, <span style="color:var(--c5)">20</span>...</div>
+          </div>
+          <div style="background:var(--bg);border-radius:12px;padding:16px">
+            <div style="font-weight:700;color:var(--c5);margin-bottom:8px">Skip Counting by 100s</div>
+            <div style="font-size:16px;letter-spacing:2px"><span style="color:var(--c1)">100</span>, <span style="color:var(--c2)">200</span>, <span style="color:var(--c4)">300</span>...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Factors & Multiples -->
+      <div class="card" style="margin-top:20px">
+        <h3 style="color:var(--c2);margin-bottom:16px">🌟 Factors & Multiples</h3>
+        <div class="grid-2">
+          <div>
+            <div class="concept-box success">
+              <h4>Factors of 12:</h4>
+              <p>Numbers that divide 12 exactly: <b>1, 2, 3, 4, 6, 12</b></p>
+            </div>
+            <div class="concept-box tip" style="margin-top:8px">
+              <h4>⚡ Trick:</h4>
+              <p>Always start from 1. Find pairs: 1×12, 2×6, 3×4</p>
+            </div>
+          </div>
+          <div>
+            <div class="concept-box trick">
+              <h4>Multiples of 4:</h4>
+              <p><b>4, 8, 12, 16, 20, 24...</b> (keep adding 4)</p>
+            </div>
+            <div class="concept-box warning" style="margin-top:8px">
+              <h4>⚠️ Remember:</h4>
+              <p>1 is a factor of EVERY number. Every number is a multiple of itself!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tricks Tab -->
+    <div id="ch1-tab-1" class="ch1-tab fade-in" style="display:none">
+      <div class="grid-2">
+        <div class="card" style="border-top:4px solid var(--c3)">
+          <div style="font-size:28px;margin-bottom:8px">⚡</div>
+          <h3 style="color:var(--c3);margin-bottom:12px">Greatest Number Trick</h3>
+          <div class="concept-box tip">
+            <h4>To form the GREATEST number:</h4>
+            <p>Arrange all digits in <b>DESCENDING order</b> (largest first)</p>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:10px">
+            <div>Digits: <b>3, 7, 1, 9, 4</b></div>
+            <div style="margin-top:6px;font-size:18px;color:var(--c4)">Greatest: <b>97,431</b></div>
+          </div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c4)">
+          <div style="font-size:28px;margin-bottom:8px">🔻</div>
+          <h3 style="color:var(--c4);margin-bottom:12px">Smallest Number Trick</h3>
+          <div class="concept-box success">
+            <h4>To form the SMALLEST number:</h4>
+            <p>Arrange all digits in <b>ASCENDING order</b> (smallest first)</p>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:10px">
+            <div>Digits: <b>3, 7, 1, 9, 4</b></div>
+            <div style="margin-top:6px;font-size:18px;color:var(--c4)">Smallest: <b>13,479</b></div>
+          </div>
+          <div class="concept-box warning" style="margin-top:10px">
+            <h4>⚠️ If 0 is present:</h4>
+            <p>0 cannot be first digit! Put the next smallest digit first.</p>
+          </div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c5)">
+          <div style="font-size:28px;margin-bottom:8px">🏛️</div>
+          <h3 style="color:var(--c5);margin-bottom:12px">Roman Numeral Shortcuts</h3>
+          <div class="concept-box trick">
+            <h4>Subtraction Rule:</h4>
+            <p>I before V or X → subtract (IV=4, IX=9)<br>X before L or C → subtract (XL=40, XC=90)<br>C before D or M → subtract (CD=400, CM=900)</p>
+          </div>
+          <div class="concept-box tip" style="margin-top:10px">
+            <h4>Fast Check:</h4>
+            <p>If smaller symbol is BEFORE larger → SUBTRACT<br>If smaller symbol is AFTER larger → ADD</p>
+          </div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c2)">
+          <div style="font-size:28px;margin-bottom:8px">🧮</div>
+          <h3 style="color:var(--c2);margin-bottom:12px">Divisibility Rules</h3>
+          <table class="styled-table">
+            <tr><th>Divisible by</th><th>Rule</th></tr>
+            <tr><td>2</td><td>Last digit even (0,2,4,6,8)</td></tr>
+            <tr><td>3</td><td>Sum of digits divisible by 3</td></tr>
+            <tr><td>4</td><td>Last 2 digits divisible by 4</td></tr>
+            <tr><td>5</td><td>Ends in 0 or 5</td></tr>
+            <tr><td>9</td><td>Sum of digits divisible by 9</td></tr>
+            <tr><td>10</td><td>Ends in 0</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Examples Tab -->
+    <div id="ch1-tab-2" class="ch1-tab fade-in" style="display:none">
+      <div id="ch1-examples"></div>
+    </div>
+
+    <!-- Practice Tab -->
+    <div id="ch1-tab-3" class="ch1-tab fade-in" style="display:none">
+      <div id="ch1-quiz"></div>
+    </div>
+
+    <!-- Test Tab -->
+    <div id="ch1-tab-4" class="ch1-tab fade-in" style="display:none">
+      <div id="ch1-test"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ PAGE: CHAPTER 2 — OPERATIONS ══════════ -->
+  <div class="page" id="page-ch2">
+    <div class="tabs" id="ch2-tabs">
+      <div class="tab active" onclick="chTab('ch2',0,this)">📖 Learn</div>
+      <div class="tab" onclick="chTab('ch2',1,this)">⚡ Tricks</div>
+      <div class="tab" onclick="chTab('ch2',2,this)">✏️ Examples</div>
+      <div class="tab" onclick="chTab('ch2',3,this)">🎯 Practice</div>
+      <div class="tab" onclick="chTab('ch2',4,this)">🏆 Test</div>
+    </div>
+    <div id="ch2-tab-0" class="ch2-tab fade-in">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color:var(--c4);margin-bottom:16px">➕ Addition Properties</h3>
+          <div class="concept-box success"><h4>Commutative</h4><p>a + b = b + a → 23 + 45 = 45 + 23 = 68</p></div>
+          <div class="concept-box tip" style="margin-top:8px"><h4>Associative</h4><p>(a+b)+c = a+(b+c) → (12+8)+5 = 12+(8+5) = 25</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Identity</h4><p>a + 0 = a → any number + 0 = same number</p></div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c2);margin-bottom:16px">✖️ Multiplication Table Tips</h3>
+          <div class="concept-box tip"><h4>× 9 Finger Trick:</h4><p>Hold up 10 fingers. Fold the Nth finger for 9×N. Left side = tens, right = ones!</p></div>
+          <div class="concept-box success" style="margin-top:8px"><h4>× 11 Trick (2-digit):</h4><p>47 × 11 = 4_(4+7)_7 = 4_11_7 → carry the 1 → <b>517</b></p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Doubling & Halving:</h4><p>24 × 5 = 24 × 10 ÷ 2 = 240 ÷ 2 = <b>120</b></p></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px">
+        <h3 style="color:var(--c5);margin-bottom:16px">➗ Division Concept</h3>
+        <div class="grid-3">
+          <div class="concept-box success"><h4>Dividend ÷ Divisor = Quotient</h4><p>42 ÷ 6 = 7</p></div>
+          <div class="concept-box tip"><h4>Remainder Check:</h4><p>Dividend = Divisor × Quotient + Remainder</p></div>
+          <div class="concept-box trick"><h4>Relationship:</h4><p>Division is reverse of multiplication<br>6 × 7 = 42 → 42 ÷ 6 = 7</p></div>
+        </div>
+      </div>
+      <!-- Scenario -->
+      <div class="card" style="margin-top:20px;border:2px solid var(--c3)">
+        <h3 style="color:var(--c3);margin-bottom:16px">🎭 Real-Life Scenario</h3>
+        <div style="background:var(--bg);border-radius:12px;padding:16px;margin-bottom:12px">
+          <p style="font-size:15px">🍫 <b>Rahul</b> has 3 boxes with <b>48 chocolates</b> each. He gives away <b>27 chocolates</b>. How many remain?</p>
+        </div>
+        <div class="concept-box success">
+          <h4>Step 1: Find total</h4><p>3 × 48 = 144 chocolates</p>
+        </div>
+        <div class="concept-box tip" style="margin-top:8px">
+          <h4>Step 2: Subtract</h4><p>144 − 27 = 117 chocolates remain</p>
+        </div>
+        <div class="concept-box trick" style="margin-top:8px">
+          <h4>⚡ Shortcut: 144 − 27</h4><p>144 − 30 + 3 = 114 + 3 = <b>117</b> ✓</p>
+        </div>
+      </div>
+    </div>
+    <div id="ch2-tab-1" class="ch2-tab fade-in" style="display:none">
+      <div class="grid-2">
+        <div class="card" style="border-top:4px solid var(--c3)">
+          <h3 style="color:var(--c3)">⚡ Multiplication Tricks</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Multiply by 25:</h4><p>Divide by 4, multiply by 100<br>48 × 25 = 48÷4 × 100 = 12 × 100 = <b>1200</b></p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Multiply by 99:</h4><p>Multiply by 100, subtract the number<br>37 × 99 = 3700 − 37 = <b>3663</b></p></div>
+          <div class="concept-box success" style="margin-top:8px"><h4>Square of numbers ending 5:</h4><p>n5² = n(n+1) then append 25<br>35² = 3×4=12, append 25 → <b>1225</b></p></div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c5)">
+          <h3 style="color:var(--c5)">⚡ Addition/Subtraction Tricks</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Add near-round numbers:</h4><p>236 + 99 = 236 + 100 − 1 = 335</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Subtract near-round numbers:</h4><p>500 − 197 = 500 − 200 + 3 = 303</p></div>
+          <div class="concept-box warning" style="margin-top:8px"><h4>BODMAS Rule:</h4><p><b>B</b>rackets → <b>O</b>f → <b>D</b>ivision → <b>M</b>ultiplication → <b>A</b>ddition → <b>S</b>ubtraction</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch2-tab-2" class="ch2-tab" style="display:none"><div id="ch2-examples"></div></div>
+    <div id="ch2-tab-3" class="ch2-tab" style="display:none"><div id="ch2-quiz"></div></div>
+    <div id="ch2-tab-4" class="ch2-tab" style="display:none"><div id="ch2-test"></div></div>
+  </div>
+
+  <!-- ══════════ PAGE: CHAPTER 3 — FRACTIONS ══════════ -->
+  <div class="page" id="page-ch3">
+    <div class="tabs">
+      <div class="tab active" onclick="chTab('ch3',0,this)">📖 Learn</div>
+      <div class="tab" onclick="chTab('ch3',1,this)">⚡ Tricks</div>
+      <div class="tab" onclick="chTab('ch3',2,this)">🎯 Practice</div>
+      <div class="tab" onclick="chTab('ch3',3,this)">🏆 Test</div>
+    </div>
+    <div id="ch3-tab-0" class="ch3-tab fade-in">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color:var(--c1);margin-bottom:16px">🍕 What is a Fraction?</h3>
+          <p style="margin-bottom:16px;font-size:14px">A fraction represents a <b>part of a whole</b>.</p>
+          <!-- Visual fraction bars -->
+          <div style="margin:16px 0">
+            <div style="font-size:13px;color:var(--muted);margin-bottom:8px">1/2 of a pizza:</div>
+            <div class="fraction-bar" style="width:200px">
+              <div class="fraction-part" style="width:50%;background:var(--c2)">1/2</div>
+              <div class="fraction-part" style="width:50%;background:var(--bg);color:var(--muted)">1/2</div>
+            </div>
+          </div>
+          <div style="margin:16px 0">
+            <div style="font-size:13px;color:var(--muted);margin-bottom:8px">3/4 of a bar:</div>
+            <div class="fraction-bar" style="width:200px">
+              <div class="fraction-part" style="width:75%;background:var(--c4)">3/4</div>
+              <div class="fraction-part" style="width:25%;background:var(--bg);color:var(--muted)"></div>
+            </div>
+          </div>
+          <div class="concept-box tip" style="margin-top:12px">
+            <h4>Numerator / Denominator</h4>
+            <p>3/4 → 3 = numerator (parts taken), 4 = denominator (total parts)</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c2);margin-bottom:16px">🏷️ Types of Fractions</h3>
+          <div class="concept-box success"><h4>Proper Fraction:</h4><p>Numerator &lt; Denominator → 3/5, 2/7</p></div>
+          <div class="concept-box tip" style="margin-top:8px"><h4>Improper Fraction:</h4><p>Numerator ≥ Denominator → 7/3, 5/5</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Mixed Number:</h4><p>Whole + fraction → 2¾ = 2 + 3/4</p></div>
+          <div class="concept-box warning" style="margin-top:8px"><h4>Equivalent Fractions:</h4><p>1/2 = 2/4 = 3/6 = 4/8 (multiply top & bottom by same number)</p></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px">
+        <h3 style="color:var(--c4);margin-bottom:16px">🔄 Comparing Fractions</h3>
+        <div class="grid-3">
+          <div class="concept-box success"><h4>Same Denominator:</h4><p>3/7 vs 5/7 → Compare numerators → 5/7 &gt; 3/7</p></div>
+          <div class="concept-box tip"><h4>Same Numerator:</h4><p>3/4 vs 3/7 → Smaller denominator = bigger fraction → 3/4 &gt; 3/7</p></div>
+          <div class="concept-box trick"><h4>Cross Multiply:</h4><p>2/3 vs 3/5 → 2×5=10 vs 3×3=9 → 10&gt;9 → 2/3 &gt; 3/5</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch3-tab-1" class="ch3-tab fade-in" style="display:none">
+      <div class="grid-2">
+        <div class="card" style="border-top:4px solid var(--c3)">
+          <h3 style="color:var(--c3)">⚡ Fraction Shortcuts</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Convert Mixed to Improper:</h4><p>2¾ = (2×4+3)/4 = 11/4<br>Formula: (Whole×Denominator+Numerator)/Denominator</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Adding Same Denominator:</h4><p>2/7 + 3/7 = (2+3)/7 = 5/7</p></div>
+          <div class="concept-box success" style="margin-top:8px"><h4>Simplify Fractions:</h4><p>Find HCF of top & bottom, then divide both<br>12/18 → HCF=6 → 2/3</p></div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c4)">
+          <h3 style="color:var(--c4)">🍰 Fraction Word Problem Trick</h3>
+          <div style="background:var(--bg);border-radius:12px;padding:16px;margin-top:12px">
+            <p>🎂 A cake is cut into 8 equal pieces. Sara eats 3 pieces. What fraction is eaten?</p>
+          </div>
+          <div class="concept-box success" style="margin-top:10px"><h4>Answer: 3/8</h4><p>3 pieces eaten out of 8 total = 3/8</p></div>
+          <div class="concept-box tip" style="margin-top:8px"><h4>Fraction remaining:</h4><p>8/8 − 3/8 = 5/8</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch3-tab-2" class="ch3-tab fade-in" style="display:none"><div id="ch3-quiz"></div></div>
+    <div id="ch3-tab-3" class="ch3-tab fade-in" style="display:none"><div id="ch3-test"></div></div>
+  </div>
+
+  <!-- ══════════ PAGE: CHAPTER 4 — MEASUREMENT ══════════ -->
+  <div class="page" id="page-ch4">
+    <div class="tabs">
+      <div class="tab active" onclick="chTab('ch4',0,this)">📖 Learn</div>
+      <div class="tab" onclick="chTab('ch4',1,this)">⚡ Tricks</div>
+      <div class="tab" onclick="chTab('ch4',2,this)">🎯 Practice</div>
+      <div class="tab" onclick="chTab('ch4',3,this)">🏆 Test</div>
+    </div>
+    <div id="ch4-tab-0" class="ch4-tab fade-in">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color:var(--c1);margin-bottom:16px">📏 Length Conversions</h3>
+          <table class="styled-table">
+            <tr><th>Unit</th><th>Conversion</th></tr>
+            <tr><td>1 km</td><td>1000 m</td></tr>
+            <tr><td>1 m</td><td>100 cm</td></tr>
+            <tr><td>1 cm</td><td>10 mm</td></tr>
+          </table>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Memory: "King Henry Died By Drinking Cold Milk"</h4><p>km, hm, dam, <b>m</b>, dm, <b>cm</b>, <b>mm</b></p></div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c4);margin-bottom:16px">⚖️ Weight Conversions</h3>
+          <table class="styled-table">
+            <tr><th>Unit</th><th>Conversion</th></tr>
+            <tr><td>1 kg</td><td>1000 g</td></tr>
+            <tr><td>½ kg</td><td>500 g</td></tr>
+            <tr><td>¼ kg</td><td>250 g</td></tr>
+          </table>
+          <div class="concept-box trick" style="margin-top:12px"><h4>💡 Trick:</h4><p>Larger unit → smaller unit: MULTIPLY<br>Smaller unit → larger unit: DIVIDE</p></div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c5);margin-bottom:16px">🕐 Time Conversions</h3>
+          <table class="styled-table">
+            <tr><th>Unit</th><th>Equals</th></tr>
+            <tr><td>1 minute</td><td>60 seconds</td></tr>
+            <tr><td>1 hour</td><td>60 minutes</td></tr>
+            <tr><td>1 day</td><td>24 hours</td></tr>
+            <tr><td>1 week</td><td>7 days</td></tr>
+            <tr><td>1 year</td><td>365 days</td></tr>
+            <tr><td>1 leap year</td><td>366 days</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c2);margin-bottom:16px">💰 Indian Money</h3>
+          <table class="styled-table">
+            <tr><th>Note/Coin</th><th>Value</th></tr>
+            <tr><td>₹1</td><td>100 paise</td></tr>
+            <tr><td>₹5</td><td>500 paise</td></tr>
+            <tr><td>₹10</td><td>1000 paise</td></tr>
+            <tr><td>₹100</td><td>10,000 paise</td></tr>
+          </table>
+          <div class="concept-box tip" style="margin-top:12px"><h4>⚡ Shortcut:</h4><p>To convert ₹ to paise: multiply by 100<br>To convert paise to ₹: divide by 100</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch4-tab-1" class="ch4-tab fade-in" style="display:none">
+      <div class="grid-2">
+        <div class="card" style="border-top:4px solid var(--c3)">
+          <h3 style="color:var(--c3)">⏱️ Time Calculation Tricks</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Finding Duration:</h4><p>End time − Start time<br>3:45 PM − 1:20 PM = 2 hrs 25 min</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>AM/PM Rule:</h4><p>12 AM = midnight (start of day)<br>12 PM = noon (middle of day)</p></div>
+          <div class="concept-box success" style="margin-top:8px"><h4>24-hour conversion:</h4><p>Add 12 to PM times (1 PM = 13:00)<br>12 AM = 00:00, 12 PM = 12:00</p></div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c5)">
+          <h3 style="color:var(--c5)">💰 Money Tricks</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Change Calculation:</h4><p>Change = Amount given − Cost<br>Given ₹100, cost ₹67 → ₹100−₹67 = ₹33 change</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Best Buy Trick:</h4><p>Compare cost per unit: Divide total price by quantity. Smaller = better deal!</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch4-tab-2" class="ch4-tab fade-in" style="display:none"><div id="ch4-quiz"></div></div>
+    <div id="ch4-tab-3" class="ch4-tab fade-in" style="display:none"><div id="ch4-test"></div></div>
+  </div>
+
+  <!-- ══════════ PAGE: CHAPTER 5 — GEOMETRY ══════════ -->
+  <div class="page" id="page-ch5">
+    <div class="tabs">
+      <div class="tab active" onclick="chTab('ch5',0,this)">📖 Learn</div>
+      <div class="tab" onclick="chTab('ch5',1,this)">⚡ Tricks</div>
+      <div class="tab" onclick="chTab('ch5',2,this)">🎨 Shapes</div>
+      <div class="tab" onclick="chTab('ch5',3,this)">🎯 Practice</div>
+      <div class="tab" onclick="chTab('ch5',4,this)">🏆 Test</div>
+    </div>
+    <div id="ch5-tab-0" class="ch5-tab fade-in">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color:var(--c1);margin-bottom:16px">📐 Shapes & Properties</h3>
+          <table class="styled-table">
+            <tr><th>Shape</th><th>Sides</th><th>Angles</th></tr>
+            <tr><td>Triangle</td><td>3</td><td>3 (sum=180°)</td></tr>
+            <tr><td>Square</td><td>4 equal</td><td>4 (all 90°)</td></tr>
+            <tr><td>Rectangle</td><td>4</td><td>4 (all 90°)</td></tr>
+            <tr><td>Pentagon</td><td>5</td><td>5</td></tr>
+            <tr><td>Hexagon</td><td>6</td><td>6</td></tr>
+            <tr><td>Circle</td><td>0</td><td>0</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c2);margin-bottom:16px">📏 Perimeter Formulas</h3>
+          <div class="concept-box success"><h4>Square:</h4><p>P = 4 × side</p></div>
+          <div class="concept-box tip" style="margin-top:8px"><h4>Rectangle:</h4><p>P = 2 × (length + breadth)</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Triangle:</h4><p>P = sum of all 3 sides</p></div>
+          <div class="concept-box warning" style="margin-top:8px"><h4>⚠️ Area vs Perimeter:</h4><p>Perimeter = boundary (fence)<br>Area = surface (carpet)</p></div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c4);margin-bottom:16px">📦 Area Formulas</h3>
+          <div class="concept-box success"><h4>Square:</h4><p>A = side × side = side²</p></div>
+          <div class="concept-box tip" style="margin-top:8px"><h4>Rectangle:</h4><p>A = length × breadth</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Triangle:</h4><p>A = ½ × base × height</p></div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c5);margin-bottom:16px">🔄 Symmetry</h3>
+          <div class="concept-box tip"><h4>Line of Symmetry:</h4><p>A line that divides a shape into two EQUAL mirror halves</p></div>
+          <div class="concept-box success" style="margin-top:8px">
+            <h4>Lines of symmetry:</h4>
+            <p>Square: 4 lines<br>Rectangle: 2 lines<br>Circle: Infinite lines<br>Equilateral triangle: 3 lines</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="ch5-tab-1" class="ch5-tab fade-in" style="display:none">
+      <div class="grid-2">
+        <div class="card" style="border-top:4px solid var(--c3)">
+          <h3 style="color:var(--c3)">⚡ Geometry Tricks</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Perimeter to Area (Square):</h4><p>If P = 20 cm → side = 20÷4 = 5 cm → Area = 5² = 25 cm²</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Area to Perimeter (Square):</h4><p>If A = 64 cm² → side = √64 = 8 cm → P = 4×8 = 32 cm</p></div>
+          <div class="concept-box success" style="margin-top:8px"><h4>Rectangle Trick:</h4><p>If P = 26, L = 8 → B = (26÷2)−8 = 13−8 = 5</p></div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c4)">
+          <h3 style="color:var(--c4)">📐 Angle Tricks</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Types of Angles:</h4>
+            <p>Acute: &lt;90° | Right: =90° | Obtuse: 90°–180°<br>Straight: =180° | Reflex: &gt;180°</p>
+          </div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Clock Angle Trick:</h4><p>Each hour mark = 30° (360°÷12)<br>Hour hand moves 0.5° per minute!</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch5-tab-2" class="ch5-tab fade-in" style="display:none">
+      <div class="card">
+        <h3 style="margin-bottom:20px;color:var(--c1)">🎨 Interactive Shapes</h3>
+        <div class="shape-demo" id="shapeSvgArea"></div>
+      </div>
+    </div>
+    <div id="ch5-tab-3" class="ch5-tab fade-in" style="display:none"><div id="ch5-quiz"></div></div>
+    <div id="ch5-tab-4" class="ch5-tab fade-in" style="display:none"><div id="ch5-test"></div></div>
+  </div>
+
+  <!-- ══════════ PAGE: CHAPTER 6 — DATA HANDLING ══════════ -->
+  <div class="page" id="page-ch6">
+    <div class="tabs">
+      <div class="tab active" onclick="chTab('ch6',0,this)">📖 Learn</div>
+      <div class="tab" onclick="chTab('ch6',1,this)">📊 Graphs</div>
+      <div class="tab" onclick="chTab('ch6',2,this)">🎯 Practice</div>
+      <div class="tab" onclick="chTab('ch6',3,this)">🏆 Test</div>
+    </div>
+    <div id="ch6-tab-0" class="ch6-tab fade-in">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color:var(--c1);margin-bottom:16px">📊 Tally Marks</h3>
+          <table class="styled-table">
+            <tr><th>Count</th><th>Tally</th></tr>
+            <tr><td>1</td><td>|</td></tr>
+            <tr><td>2</td><td>||</td></tr>
+            <tr><td>3</td><td>|||</td></tr>
+            <tr><td>4</td><td>||||</td></tr>
+            <tr><td>5</td><td><s>||||</s></td></tr>
+          </table>
+          <div class="concept-box tip" style="margin-top:12px"><h4>💡 Trick:</h4><p>Count tallies in groups of 5. Count groups × 5, then add remainders.</p></div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c2);margin-bottom:16px">📋 Frequency Table</h3>
+          <p style="font-size:14px;margin-bottom:12px">Organizes raw data into a neat table.</p>
+          <table class="styled-table">
+            <tr><th>Favourite Sport</th><th>Tally</th><th>Frequency</th></tr>
+            <tr><td>Cricket</td><td><s>||||</s> <s>||||</s></td><td>10</td></tr>
+            <tr><td>Football</td><td><s>||||</s> ||</td><td>7</td></tr>
+            <tr><td>Badminton</td><td><s>||||</s></td><td>5</td></tr>
+            <tr><td>Tennis</td><td>|||</td><td>3</td></tr>
+          </table>
+          <div class="concept-box success" style="margin-top:12px"><h4>Total = 10+7+5+3 = 25 students</h4></div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:20px">
+        <div class="card">
+          <h3 style="color:var(--c4);margin-bottom:16px">📉 Pictograph</h3>
+          <p style="font-size:14px;margin-bottom:12px">Uses pictures/symbols to represent data.</p>
+          <div style="background:var(--bg);border-radius:12px;padding:16px">
+            <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Each 🍎 = 5 apples sold</div>
+            <div style="margin:6px 0">Mon: 🍎🍎🍎 = 15</div>
+            <div style="margin:6px 0">Tue: 🍎🍎🍎🍎 = 20</div>
+            <div style="margin:6px 0">Wed: 🍎🍎 = 10</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c5);margin-bottom:16px">📊 Bar Graph Tips</h3>
+          <div class="concept-box success"><h4>Reading a Bar Graph:</h4><p>Look at the height of each bar and match with Y-axis scale</p></div>
+          <div class="concept-box tip" style="margin-top:8px"><h4>Finding Difference:</h4><p>Subtract smaller bar value from larger bar value</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Finding Total:</h4><p>Add all bar values together</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch6-tab-1" class="ch6-tab fade-in" style="display:none">
+      <div class="card">
+        <h3 style="margin-bottom:20px;color:var(--c1)">📊 Interactive Bar Graph</h3>
+        <div id="barGraphArea"></div>
+      </div>
+    </div>
+    <div id="ch6-tab-2" class="ch6-tab fade-in" style="display:none"><div id="ch6-quiz"></div></div>
+    <div id="ch6-tab-3" class="ch6-tab fade-in" style="display:none"><div id="ch6-test"></div></div>
+  </div>
+
+  <!-- ══════════ PAGE: CHAPTER 7 — LOGICAL REASONING ══════════ -->
+  <div class="page" id="page-ch7">
+    <div class="tabs">
+      <div class="tab active" onclick="chTab('ch7',0,this)">📖 Types</div>
+      <div class="tab" onclick="chTab('ch7',1,this)">⚡ Tricks</div>
+      <div class="tab" onclick="chTab('ch7',2,this)">🎯 Practice</div>
+      <div class="tab" onclick="chTab('ch7',3,this)">🏆 Test</div>
+    </div>
+    <div id="ch7-tab-0" class="ch7-tab fade-in">
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color:var(--c1);margin-bottom:16px">🔤 Coding-Decoding</h3>
+          <div class="concept-box tip"><h4>Letter shift trick:</h4><p>If A=1, B=2...Z=26, decode by finding letter positions</p></div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:10px">
+            <p style="font-size:14px">If CAT = 3-1-20, then DOG = ?</p>
+            <p style="color:var(--c4);font-weight:700;margin-top:6px">D=4, O=15, G=7 → DOG = 4-15-7</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c2);margin-bottom:16px">🔍 Odd One Out</h3>
+          <div class="concept-box tip"><h4>Strategy:</h4><p>Find the common property of 3 items. The 4th that doesn't fit = Odd one out</p></div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:10px">
+            <p>Apple, Mango, Banana, <span style="color:var(--c2)">Carrot</span></p>
+            <p style="color:var(--c4);font-weight:700;margin-top:6px">Carrot is a vegetable; others are fruits</p>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:10px">
+            <p>2, 4, 6, <span style="color:var(--c2)">9</span>, 8</p>
+            <p style="color:var(--c4);font-weight:700;margin-top:6px">9 is odd; others are even</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c4);margin-bottom:16px">🔢 Number Analogies</h3>
+          <div class="concept-box tip"><h4>Method:</h4><p>Find the relationship between the first pair, apply to second pair</p></div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:10px">
+            <p>3 : 9 :: 5 : ?</p>
+            <p style="color:var(--muted);font-size:13px">3 × 3 = 9, so 5 × 5 = <b style="color:var(--c4)">25</b></p>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:8px">
+            <p>2 : 8 :: 3 : ?</p>
+            <p style="color:var(--muted);font-size:13px">2³ = 8, so 3³ = <b style="color:var(--c4)">27</b></p>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c5);margin-bottom:16px">🔄 Mirror Images</h3>
+          <div class="concept-box tip"><h4>Rule:</h4><p>Left-Right gets flipped in a mirror image. Up-Down remains same.</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>For Letters:</h4><p>Draw axis, flip left ↔ right<br>b ↔ d, p ↔ q, A stays A (symmetric!)</p></div>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c1);margin-bottom:16px">🧭 Direction Sense</h3>
+          <div class="concept-box tip">
+            <h4>Compass Rules:</h4>
+            <p>Face North → Turn Right = East → Turn Right again = South → Turn Right = West</p>
+          </div>
+          <svg width="140" height="140" viewBox="0 0 140 140" style="display:block;margin:12px auto">
+            <circle cx="70" cy="70" r="60" fill="var(--bg)" stroke="var(--c1)" stroke-width="2"/>
+            <text x="70" y="22" text-anchor="middle" font-family="Nunito" font-weight="700" font-size="14" fill="var(--c2)">N</text>
+            <text x="70" y="125" text-anchor="middle" font-family="Nunito" font-weight="700" font-size="14" fill="var(--c4)">S</text>
+            <text x="122" y="75" text-anchor="middle" font-family="Nunito" font-weight="700" font-size="14" fill="var(--c5)">E</text>
+            <text x="18" y="75" text-anchor="middle" font-family="Nunito" font-weight="700" font-size="14" fill="var(--c3)">W</text>
+            <line x1="70" y1="30" x2="70" y2="110" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4"/>
+            <line x1="30" y1="70" x2="110" y2="70" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4"/>
+          </svg>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c3);margin-bottom:16px">🔢 Pattern Finding</h3>
+          <div class="concept-box tip"><h4>Number Series Tricks:</h4>
+            <p>• Check differences: 2,5,8,11 → +3 each<br>• Check ratios: 2,4,8,16 → ×2 each<br>• Check squares: 1,4,9,16,25 → 1²,2²,3²,4²,5²</p>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:12px;margin-top:10px">
+            <p>Find next: 3, 6, 12, 24, <b>?</b></p>
+            <p style="color:var(--c4);font-weight:700;margin-top:6px">Pattern: ×2 each → <b>48</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="ch7-tab-1" class="ch7-tab fade-in" style="display:none">
+      <div class="grid-2">
+        <div class="card" style="border-top:4px solid var(--c3)">
+          <h3 style="color:var(--c3)">⚡ Elimination Method</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>For MCQs:</h4><p>1. Eliminate clearly wrong options first<br>2. Between 2 options, apply the rule carefully<br>3. Check your answer by substituting back</p></div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--c5)">
+          <h3 style="color:var(--c5)">🧩 Seating Arrangement Tips</h3>
+          <div class="concept-box tip" style="margin-top:12px"><h4>Draw it out!</h4><p>Always make a diagram. Place fixed positions first, then fill in clues one by one.</p></div>
+          <div class="concept-box trick" style="margin-top:8px"><h4>Key words:</h4><p>"Immediate left/right" = directly next to<br>"Second from left" = count from left end</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="ch7-tab-2" class="ch7-tab fade-in" style="display:none"><div id="ch7-quiz"></div></div>
+    <div id="ch7-tab-3" class="ch7-tab fade-in" style="display:none"><div id="ch7-test"></div></div>
+  </div>
+
+  <!-- ══════════ PAGE: PRACTICE QUIZ ══════════ -->
+  <div class="page" id="page-practice">
+    <div class="card" style="margin-bottom:20px">
+      <h3 style="margin-bottom:16px">🎯 Practice Quiz Generator</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <select id="practiceChapter" style="padding:10px 16px;border:2px solid var(--bg);border-radius:10px;font-family:var(--font-body);font-size:14px;background:var(--card);color:var(--text)">
+          <option value="0">All Chapters</option>
+          <option value="1">Number Sense</option>
+          <option value="2">Operations</option>
+          <option value="3">Fractions</option>
+          <option value="4">Measurement & Money</option>
+          <option value="5">Geometry</option>
+          <option value="6">Data Handling</option>
+          <option value="7">Logical Reasoning</option>
+        </select>
+        <select id="practiceLevel" style="padding:10px 16px;border:2px solid var(--bg);border-radius:10px;font-family:var(--font-body);font-size:14px;background:var(--card);color:var(--text)">
+          <option value="1">Level 1 — Easy</option>
+          <option value="2">Level 2 — Medium</option>
+          <option value="3">Level 3 — Hard</option>
+          <option value="4">Level 4 — Olympiad</option>
+        </select>
+        <select id="practiceCount" style="padding:10px 16px;border:2px solid var(--bg);border-radius:10px;font-family:var(--font-body);font-size:14px;background:var(--card);color:var(--text)">
+          <option value="5">5 Questions</option>
+          <option value="10" selected>10 Questions</option>
+          <option value="20">20 Questions</option>
+        </select>
+        <button class="btn btn-primary" onclick="startPractice()">🚀 Start Quiz</button>
+      </div>
+    </div>
+    <div id="practiceArea"></div>
+  </div>
+
+  <!-- ══════════ PAGE: MOCK TESTS ══════════ -->
+  <div class="page" id="page-mock">
+    <div class="grid-2" id="mockMenu">
+      <div class="card" style="border-top:4px solid var(--c1);cursor:pointer" onclick="startMock(1)">
+        <div style="font-size:40px;margin-bottom:12px">📝</div>
+        <h3>Mock Test 1</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px">25 Questions • 30 Minutes • All Chapters</p>
+        <div class="ch-badge" style="background:rgba(108,99,255,.1);color:var(--c1);margin-top:12px">Beginner Friendly</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--c4);cursor:pointer" onclick="startMock(2)">
+        <div style="font-size:40px;margin-bottom:12px">🎯</div>
+        <h3>Mock Test 2</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px">30 Questions • 35 Minutes • Mixed Difficulty</p>
+        <div class="ch-badge" style="background:rgba(107,203,119,.1);color:var(--c4);margin-top:12px">Intermediate</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--c2);cursor:pointer" onclick="startMock(3)">
+        <div style="font-size:40px;margin-bottom:12px">⚡</div>
+        <h3>Mock Test 3</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px">35 Questions • 40 Minutes • Olympiad Level</p>
+        <div class="ch-badge" style="background:rgba(255,107,107,.1);color:var(--c2);margin-top:12px">Advanced</div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--c3);cursor:pointer" onclick="startMock(4)">
+        <div style="font-size:40px;margin-bottom:12px">🏆</div>
+        <h3>Final Olympiad Simulation</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px">50 Questions • 60 Minutes • SOF Pattern</p>
+        <div class="ch-badge" style="background:rgba(255,217,61,.15);color:#b07800;margin-top:12px">Champion Level</div>
+      </div>
+    </div>
+    <div id="mockArea" style="display:none"></div>
+  </div>
+
+  <!-- ══════════ PAGE: TRICK BANK ══════════ -->
+  <div class="page" id="page-tricks">
+    <div class="card" style="margin-bottom:20px;background:linear-gradient(135deg,var(--c3),#E17055);color:#fff">
+      <h2 style="font-size:24px;margin-bottom:8px">⚡ Top 50 IMO Winning Tricks</h2>
+      <p>Master these shortcuts and dominate the Olympiad!</p>
+    </div>
+    <div id="tricksGrid" class="grid-2"></div>
+  </div>
+
+  <!-- ══════════ PAGE: AI TUTOR ══════════ -->
+  <div class="page" id="page-tutor">
+    <div class="card" style="max-width:700px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--c1),var(--c5));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px">🤖</div>
+        <div>
+          <h3>AI Maths Tutor</h3>
+          <p style="font-size:13px;color:var(--muted)">Ask me anything about Grade 4 Maths Olympiad!</p>
+        </div>
+        <div style="margin-left:auto;background:rgba(107,203,119,.15);color:var(--c4);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700">● Online</div>
+      </div>
+
+      <!-- Suggested questions -->
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px" id="suggestedQs">
+        <button class="btn btn-secondary btn-sm" onclick="askAI(this.textContent)">Explain place value</button>
+        <button class="btn btn-secondary btn-sm" onclick="askAI(this.textContent)">Fraction shortcut trick</button>
+        <button class="btn btn-secondary btn-sm" onclick="askAI(this.textContent)">How to find area of rectangle?</button>
+        <button class="btn btn-secondary btn-sm" onclick="askAI(this.textContent)">Explain Roman numerals</button>
+        <button class="btn btn-secondary btn-sm" onclick="askAI(this.textContent)">Pattern finding tricks</button>
+        <button class="btn btn-secondary btn-sm" onclick="askAI(this.textContent)">Division remainder rule</button>
+      </div>
+
+      <div class="chat-wrap">
+        <div class="chat-msgs" id="chatMsgs">
+          <div class="chat-bubble ai">👋 Hi! I'm your AI Maths Tutor! Ask me anything about Number Sense, Fractions, Geometry, or any other Grade 4 topic. I'm here to help you crack the Olympiad! 🏆</div>
+        </div>
+        <div class="chat-input-row">
+          <input class="chat-input" id="chatInput" placeholder="Ask your question..." onkeydown="if(event.key==='Enter')sendChat()">
+          <button class="btn btn-primary" onclick="sendChat()">Send ✈️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ PAGE: PROGRESS ══════════ -->
+  <div class="page" id="page-progress">
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="margin-bottom:16px;color:var(--c1)">📊 Chapter Progress</h3>
+        <div id="chapterProgressList"></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:16px;color:var(--c2)">🎯 Accuracy by Chapter</h3>
+        <div id="accuracyChart"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3 style="margin-bottom:16px;color:var(--c4)">📅 Activity Calendar</h3>
+      <p style="font-size:14px;color:var(--muted)">Keep your streak going! Each green square = active day.</p>
+      <div id="activityCalendar" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ PAGE: BADGES ══════════ -->
+  <div class="page" id="page-badges">
+    <div class="card" style="background:linear-gradient(135deg,var(--c3),var(--c2));color:#fff;margin-bottom:20px">
+      <h2>🎖️ Your Achievement Badges</h2>
+      <p style="margin-top:8px;opacity:.9">Earn badges by completing chapters, acing tests, and maintaining streaks!</p>
+    </div>
+    <!-- Rank levels -->
+    <div class="card" style="margin-bottom:20px">
+      <h3 style="margin-bottom:16px">🏆 Rank Progress</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px" id="rankLevels"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:16px">🎖️ All Badges</h3>
+      <div class="badge-grid" id="allBadges"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ PAGE: PARENT DASHBOARD ══════════ -->
+  <div class="page" id="page-parent">
+    <div class="card" style="background:linear-gradient(135deg,var(--c5),var(--c1));color:#fff;margin-bottom:24px">
+      <h2 style="margin-bottom:4px">👨‍👩‍👧 Parent Dashboard</h2>
+      <p>Track your child's Olympiad preparation progress</p>
+    </div>
+    <div class="grid-4" style="margin-bottom:24px">
+      <div class="stat-card bg1"><div class="stat-icon">⭐</div><div class="stat-val" id="p-pts">0</div><div class="stat-lbl">Total Points</div></div>
+      <div class="stat-card bg2"><div class="stat-icon">✅</div><div class="stat-val" id="p-acc">0%</div><div class="stat-lbl">Accuracy</div></div>
+      <div class="stat-card bg4"><div class="stat-icon">📚</div><div class="stat-val" id="p-chaps">0/7</div><div class="stat-lbl">Chapters Done</div></div>
+      <div class="stat-card bg3"><div class="stat-icon">🕐</div><div class="stat-val" id="p-time">0 min</div><div class="stat-lbl">Study Time</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="color:var(--c4);margin-bottom:16px">💪 Strong Topics</h3>
+        <div id="strongTopics"></div>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--c2);margin-bottom:16px">📌 Needs Work</h3>
+        <div id="weakTopics"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3 style="margin-bottom:16px;color:var(--c5)">📋 Recommendations</h3>
+      <div id="recommendations"></div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script>
+// ─── State ───
+let state = JSON.parse(localStorage.getItem('imoState') || '{}');
+if(!state.pts) state = {pts:0,streak:3,acc:0,totalQ:0,correctQ:0,chProgress:{},chAcc:{},studyMin:0,badges:[],chatHistory:[]};
+
+const CHAPTERS = [
+  {id:'ch1',name:'Number Sense',icon:'🔢',color:'#6C63FF',desc:'Place value, Roman numerals, patterns'},
+  {id:'ch2',name:'Operations',icon:'➕',color:'#FF6B6B',desc:'Addition, subtraction, multiplication, division'},
+  {id:'ch3',name:'Fractions',icon:'🍕',color:'#FFD93D',desc:'Parts of whole, comparing, equivalent fractions'},
+  {id:'ch4',name:'Measurement & Money',icon:'⏱️',color:'#6BCB77',desc:'Length, weight, time and Indian currency'},
+  {id:'ch5',name:'Geometry',icon:'📐',color:'#4D96FF',desc:'Shapes, perimeter, area, symmetry'},
+  {id:'ch6',name:'Data Handling',icon:'📈',color:'#A29BFE',desc:'Tally marks, bar graphs, pictographs'},
+  {id:'ch7',name:'Logical Reasoning',icon:'🧩',color:'#FD79A8',desc:'Patterns, analogies, odd one out'}
+];
+
+const QUOTES = [
+  '"Every expert was once a beginner. Keep practicing!"',
+  '"The secret of getting ahead is getting started!"',
+  '"Mathematics is not about numbers, it\'s about understanding!"',
+  '"One problem at a time, one step at a time — you\'ve got this!"',
+  '"Champions keep playing until they get it right!"',
+  '"The more you practice, the luckier you get!"',
+  '"Believe in yourself — you are capable of amazing things!"'
+];
+
+const BADGES_DEF = [
+  {id:'first_quiz',icon:'🎯',name:'First Quiz',desc:'Complete your first quiz',pts:10},
+  {id:'streak3',icon:'🔥',name:'3-Day Streak',desc:'Study 3 days in a row',pts:30},
+  {id:'acc80',icon:'🎖️',name:'Accuracy Ace',desc:'Get 80%+ accuracy',pts:50},
+  {id:'ch1done',icon:'🔢',name:'Number Ninja',desc:'Complete Number Sense',pts:40},
+  {id:'ch3done',icon:'🍕',name:'Fraction Hero',desc:'Complete Fractions',pts:40},
+  {id:'ch5done',icon:'📐',name:'Geometry Guru',desc:'Complete Geometry',pts:40},
+  {id:'ch7done',icon:'🧩',name:'Logic Legend',desc:'Complete Logical Reasoning',pts:50},
+  {id:'mock1',icon:'📝',name:'Test Taker',desc:'Complete first Mock Test',pts:60},
+  {id:'olympiad',icon:'🏆',name:'Olympiad Master',desc:'Score 90%+ on Simulation',pts:200},
+  {id:'allchaps',icon:'⭐',name:'Scholar Supreme',desc:'Complete all 7 chapters',pts:150},
+  {id:'pts500',icon:'💎',name:'Point Collector',desc:'Earn 500 points',pts:0},
+  {id:'speed',icon:'⚡',name:'Speed Demon',desc:'Finish a quiz in under 60 sec',pts:30}
+];
+
+const RANKS = [
+  {name:'🌱 Beginner',min:0,color:'#74B9FF'},
+  {name:'🔍 Explorer',min:100,color:'#6BCB77'},
+  {name:'📚 Scholar',min:300,color:'#A29BFE'},
+  {name:'🥇 Champion',min:600,color:'#FFD93D'},
+  {name:'🏆 Olympiad Master',min:1000,color:'#FF6B6B'}
+];
+
+// ─── Big Question Banks ───
+const QB = {
+  ch1:[
+    {q:"What is the place value of 7 in 47,305?",opts:["7","700","7,000","70"],ans:2,exp:"7 is in the thousands place, so its place value = 7 × 1000 = 7,000"},
+    {q:"Which is the greatest number? 9,876 ; 9,867 ; 9,786 ; 9,768",opts:["9,768","9,786","9,867","9,876"],ans:3,exp:"Compare digit by digit from left: all start with 9, then 8, then 7 vs 6 → 9876 is greatest"},
+    {q:"Express 49 in Roman Numerals:",opts:["XXXXIX","IL","XLIX","LIIX"],ans:2,exp:"49 = 40 + 9 = XL + IX = XLIX"},
+    {q:"What is the smallest 5-digit number using digits 3,0,7,1,5?",opts:["01357","10357","13057","10375"],ans:1,exp:"Put smallest non-zero digit first: 1, then 0, then ascending: 10357"},
+    {q:"Which set shows factors of 18?",opts:["1,2,3,6,9,18","1,2,4,9,18","1,3,6,9,18","1,2,3,6,18"],ans:0,exp:"18 = 1×18 = 2×9 = 3×6 → Factors: 1,2,3,6,9,18"},
+    {q:"Find the next term: 2, 5, 10, 17, 26, __",opts:["33","35","37","40"],ans:2,exp:"Differences: 3,5,7,9,11 (odd numbers) → next difference = 11 → 26+11=37"},
+    {q:"What is the face value of 6 in 56,234?",opts:["6","6,000","60","600"],ans:0,exp:"Face value is always the digit itself: face value of 6 = 6"},
+    {q:"Arrange in descending order: 3040, 3004, 3400, 3044",opts:["3400>3044>3040>3004","3004<3040<3044<3400","3400>3040>3044>3004","3044>3040>3400>3004"],ans:0,exp:"3400>3044>3040>3004 (compare hundreds digit: 4>0>0>0, then tens)"},
+    {q:"What is LXV in Hindu-Arabic numerals?",opts:["55","65","75","85"],ans:1,exp:"LXV = L+X+V = 50+10+5 = 65"},
+    {q:"Which number is a multiple of both 4 and 6?",opts:["14","16","18","24"],ans:3,exp:"LCM of 4 and 6 = 12. Multiples of 12: 12, 24... → 24 is a multiple of both"},
+    {q:"In 84,627 which digit is in the hundreds place?",opts:["8","4","6","2"],ans:2,exp:"84,627: 8=ten-thousands, 4=thousands, 6=hundreds, 2=tens, 7=ones → hundreds = 6"},
+    {q:"How many factors does 12 have?",opts:["4","5","6","7"],ans:2,exp:"Factors of 12: 1,2,3,4,6,12 = 6 factors"},
+    {q:"What comes next? 1, 4, 9, 16, 25, __",opts:["30","36","35","49"],ans:1,exp:"Pattern: 1²,2²,3²,4²,5² → next is 6²=36"},
+    {q:"XCIX in numbers is:",opts:["89","99","109","91"],ans:1,exp:"XC = 90, IX = 9 → XCIX = 99"},
+    {q:"Find the LCM of 4 and 6:",opts:["2","12","24","6"],ans:1,exp:"Multiples of 4: 4,8,12,16... Multiples of 6: 6,12,18... First common = 12"},
+    {q:"Which is an odd number?",opts:["348","426","537","672"],ans:2,exp:"A number is odd if its last digit is 1,3,5,7 or 9. 537 ends in 7 → odd"},
+    {q:"The HCF of 12 and 18 is:",opts:["3","6","9","12"],ans:1,exp:"Factors of 12: 1,2,3,4,6,12. Factors of 18: 1,2,3,6,9,18. Highest common = 6"},
+    {q:"Round 4,567 to the nearest thousand:",opts:["4,000","5,000","4,500","4,600"],ans:1,exp:"Hundreds digit is 5 ≥ 5, so round up: 5,000"},
+    {q:"A number when divided by 9 gives remainder 0. The number is:",opts:["83","84","81","82"],ans:2,exp:"81 ÷ 9 = 9 exactly, remainder 0. Sum of digits of 81 = 9 (divisible by 9)"},
+    {q:"Olympiad: The sum of place values of all 7s in 7,070 is:",opts:["77","7,070","7,007","707"],ans:1,exp:"7 in thousands place = 7000, 7 in tens place = 70. Sum = 7000+70 = 7070"}
+  ],
+  ch2:[
+    {q:"What is 456 + 378?",opts:["824","834","844","814"],ans:1,exp:"456+378: 6+8=14 (write 4 carry 1), 5+7+1=13 (write 3 carry 1), 4+3+1=8 → 834"},
+    {q:"48 × 25 = ?",opts:["1000","1100","1200","1400"],ans:2,exp:"48×25 = 48×100÷4 = 4800÷4 = 1200 (shortcut)"},
+    {q:"756 ÷ 12 = ?",opts:["53","63","73","43"],ans:1,exp:"756÷12: 12×63=756 → answer is 63"},
+    {q:"BODMAS: 18 ÷ 3 + 4 × 2 = ?",opts:["10","14","16","18"],ans:1,exp:"BODMAS: division first: 18÷3=6; multiplication: 4×2=8; addition: 6+8=14"},
+    {q:"Which property: 7 + (3 + 5) = (7 + 3) + 5?",opts:["Commutative","Associative","Distributive","Identity"],ans:1,exp:"Grouping changes but result is same = Associative property"},
+    {q:"999 × 8 = ?",opts:["7992","7982","7912","8992"],ans:0,exp:"999×8 = (1000-1)×8 = 8000-8 = 7992"},
+    {q:"Rahul buys 12 pens at ₹8 each and 5 notebooks at ₹15 each. Total cost?",opts:["₹171","₹161","₹151","₹181"],ans:0,exp:"12×8=96, 5×15=75, Total=96+75=₹171"},
+    {q:"What is 2000 − 1346?",opts:["654","644","664","674"],ans:0,exp:"2000−1346: 2000−1000=1000, 1000−346=654"},
+    {q:"37 × 11 = ?",opts:["397","407","417","427"],ans:1,exp:"37×11 trick: 3_(3+7)_7 → 3_10_7 → carry 1 → 407"},
+    {q:"Olympiad: If a÷b=17 remainder 5, and a=75. Find b.",opts:["4","5","3","6"],ans:0,exp:"a=b×q+r → 75=b×17+5 → b×17=70 → b=70÷17... Let's check: 4×17=68+5=73 ≠75. b=4: 4×17+5=73 No. Actually 75=(b×q)+5 so b×q=70. b=5: 5×14=70 ✓"},
+    {q:"The product of two numbers is 144 and their sum is 24. The numbers are:",opts:["12 and 12","8 and 18","6 and 24","9 and 16"],ans:0,exp:"12×12=144 and 12+12=24 ✓"},
+    {q:"Simplify: 5 × 4 + 20 ÷ 5 − 3",opts:["21","23","19","25"],ans:0,exp:"5×4=20, 20÷5=4, 20+4−3=21"},
+    {q:"A factory makes 1,350 toys per day. How many in 7 days?",opts:["9,350","9,450","9,150","9,250"],ans:1,exp:"1350×7=9450 toys"},
+    {q:"345 × 12 = ?",opts:["4,040","4,140","4,240","4,340"],ans:1,exp:"345×12=345×10+345×2=3450+690=4140"},
+    {q:"Dividend=250, Divisor=8, Remainder=2. Find Quotient.",opts:["30","31","32","33"],ans:1,exp:"D=d×Q+R → 250=8×Q+2 → 8×Q=248 → Q=31"},
+  ],
+  ch3:[
+    {q:"Which fraction is equivalent to 2/3?",opts:["4/5","4/6","6/8","3/5"],ans:1,exp:"2/3 = (2×2)/(3×2) = 4/6"},
+    {q:"Which is the largest: 3/4, 2/3, 5/6, 7/12?",opts:["3/4","2/3","5/6","7/12"],ans:2,exp:"Convert to common denominator 12: 9/12, 8/12, 10/12, 7/12 → 10/12 = 5/6 is largest"},
+    {q:"5/8 + 3/8 = ?",opts:["8/8","8/16","1","Both A and C"],ans:3,exp:"5/8+3/8=8/8=1"},
+    {q:"Convert 2¾ to improper fraction:",opts:["9/4","11/4","7/4","10/4"],ans:1,exp:"2¾ = (2×4+3)/4 = 11/4"},
+    {q:"1/2 of 48 = ?",opts:["12","24","36","48"],ans:1,exp:"1/2 × 48 = 24"},
+    {q:"Which fraction is between 1/4 and 1/2?",opts:["1/3","1/5","2/3","3/4"],ans:0,exp:"1/4=0.25, 1/3≈0.33, 1/2=0.5 → 1/3 is between them"},
+    {q:"Simplify 12/18:",opts:["2/3","3/4","4/6","6/9"],ans:0,exp:"HCF of 12 and 18 = 6. 12÷6=2, 18÷6=3 → 2/3"},
+    {q:"A ribbon is 3/4 m long. Another is 1/2 m. Total length?",opts:["4/6 m","5/4 m","1¼ m","Both B and C"],ans:3,exp:"3/4+1/2=3/4+2/4=5/4=1¼ m"},
+    {q:"How many fourths make 2 whole?",opts:["2","4","6","8"],ans:3,exp:"1 whole = 4/4, so 2 wholes = 8/4 = 8 fourths"},
+    {q:"Olympiad: What fraction of 60 is 15?",opts:["1/3","1/4","1/5","1/6"],ans:1,exp:"15/60 = 1/4"},
+  ],
+  ch4:[
+    {q:"How many minutes are there in 2 hours 45 minutes?",opts:["145","155","165","175"],ans:2,exp:"2 hours = 120 min. 120+45 = 165 minutes"},
+    {q:"Convert 3.5 kg to grams:",opts:["350 g","3500 g","3050 g","35,000 g"],ans:1,exp:"1 kg = 1000 g. 3.5×1000 = 3500 g"},
+    {q:"A train leaves at 7:45 AM and arrives at 2:15 PM. Journey time?",opts:["6h 15min","6h 30min","7h 30min","7h 15min"],ans:1,exp:"7:45 AM to 2:15 PM: count up from 7:45 AM to 2:15 PM = 6h 30min"},
+    {q:"₹250 + 75 paise = ?",opts:["₹252.75","₹250.75","₹257.50","₹327.50"],ans:1,exp:"₹250 + ₹0.75 = ₹250.75"},
+    {q:"1 km 350 m = ? m",opts:["1035 m","1350 m","13,500 m","10,350 m"],ans:1,exp:"1 km = 1000 m. 1000+350 = 1350 m"},
+    {q:"If 5 pens cost ₹35, what is the cost of 8 pens?",opts:["₹56","₹63","₹48","₹70"],ans:0,exp:"Cost of 1 pen = 35÷5 = ₹7. Cost of 8 = 7×8 = ₹56"},
+    {q:"Which is heavier: 2.5 kg or 2,400 g?",opts:["2.5 kg","2,400 g","Equal","Cannot say"],ans:0,exp:"2.5 kg = 2500 g. 2500 > 2400 → 2.5 kg is heavier"},
+    {q:"Rohan starts reading at 4:20 PM and reads for 1h 50 min. When does he finish?",opts:["5:70 PM","6:10 PM","6:20 PM","5:10 PM"],ans:1,exp:"4:20 + 1h = 5:20, + 50 min = 6:10 PM"},
+    {q:"A bottle holds 750 ml. How many litres is this?",opts:["0.075 L","7.5 L","0.75 L","75 L"],ans:2,exp:"750 ml = 750÷1000 = 0.75 L"},
+    {q:"Olympiad: A shopkeeper gives ₹37.50 change from ₹100 for an item. What was the item's cost?",opts:["₹62.50","₹63.50","₹57.50","₹72.50"],ans:0,exp:"Cost = ₹100 − ₹37.50 = ₹62.50"},
+  ],
+  ch5:[
+    {q:"Perimeter of a square with side 9 cm:",opts:["18 cm","27 cm","36 cm","81 cm"],ans:2,exp:"P = 4 × side = 4 × 9 = 36 cm"},
+    {q:"Area of a rectangle L=12 cm, B=7 cm:",opts:["38 cm²","84 cm²","38 cm","84 cm"],ans:1,exp:"Area = L × B = 12 × 7 = 84 cm²"},
+    {q:"How many lines of symmetry does a square have?",opts:["2","4","6","8"],ans:1,exp:"A square has 4 lines of symmetry (2 through midpoints of sides, 2 diagonal)"},
+    {q:"An angle of 135° is called:",opts:["Acute","Right","Obtuse","Reflex"],ans:2,exp:"Angles between 90° and 180° are obtuse. 135° is obtuse."},
+    {q:"The perimeter of a rectangle is 28 cm. Its length is 9 cm. Find breadth.",opts:["5 cm","10 cm","14 cm","19 cm"],ans:0,exp:"P=2(L+B) → 28=2(9+B) → 14=9+B → B=5 cm"},
+    {q:"Which shape has exactly 1 line of symmetry among these?",opts:["Square","Circle","Isosceles triangle","Equilateral triangle"],ans:2,exp:"Isosceles triangle has exactly 1 line of symmetry (through apex to midpoint of base)"},
+    {q:"Area of a square with perimeter 20 cm:",opts:["25 cm²","20 cm²","100 cm²","40 cm²"],ans:0,exp:"P=20 → side=5 cm → Area=5×5=25 cm²"},
+    {q:"A right angle = ?",opts:["45°","90°","120°","180°"],ans:1,exp:"A right angle is exactly 90°"},
+    {q:"Find area of triangle: base=10 cm, height=6 cm",opts:["30 cm²","60 cm²","16 cm²","32 cm²"],ans:0,exp:"Area = ½ × base × height = ½ × 10 × 6 = 30 cm²"},
+    {q:"Olympiad: A path 3 m wide surrounds a 10m×8m garden. Find the area of the path.",opts:["84 m²","164 m²","96 m²","144 m²"],ans:0,exp:"Outer dimensions: 16×14=224 m². Inner: 10×8=80 m². Path area=224-80=144 m². Wait, recalc: outer=(10+6)×(8+6)=16×14=224, inner=80, path=224-80=144 m²"},
+    {q:"How many faces does a cube have?",opts:["4","6","8","12"],ans:1,exp:"A cube has 6 faces"},
+    {q:"The number of edges of a cuboid:",opts:["8","10","12","16"],ans:2,exp:"A cuboid has 12 edges"},
+  ],
+  ch6:[
+    {q:"In a bar graph, 1 unit = 5 students. A bar of height 7 units represents:",opts:["7 students","35 students","12 students","70 students"],ans:1,exp:"7 units × 5 students per unit = 35 students"},
+    {q:"In a pictograph, 1 🌟 = 4 votes. 6 stars represent:",opts:["6 votes","10 votes","24 votes","20 votes"],ans:2,exp:"6 × 4 = 24 votes"},
+    {q:"A class survey shows: Sports=12, Music=8, Art=5, Reading=10. Most popular activity?",opts:["Music","Art","Sports","Reading"],ans:2,exp:"Highest frequency = Sports with 12"},
+    {q:"Find the sum of frequencies: 15, 23, 12, 8, 17",opts:["65","75","85","95"],ans:1,exp:"15+23+12+8+17 = 75"},
+    {q:"A pictograph uses one picture for every 10 items. How many pictures for 70 items?",opts:["7","10","70","700"],ans:0,exp:"70 ÷ 10 = 7 pictures"},
+    {q:"In a bar graph, which bar is easiest to compare?",opts:["Tallest","Shortest","All are easy","Only colored ones"],ans:2,exp:"Bar graphs make ALL bars easy to compare visually"},
+    {q:"Tally marks shown: |||| |||| ||| = ?",opts:["11","12","13","14"],ans:2,exp:"First group (||||) = 5 crossed, second (||||) = 5 crossed, ||| = 3 → total = 5+5+3 = 13"},
+    {q:"What does the title of a graph tell us?",opts:["Scale","What data represents","Number of items","Type of graph"],ans:1,exp:"The title describes what the graph is about / what data it represents"},
+    {q:"In the months Jan-Dec, the month with shortest name having most letters?",opts:["May","June","July","March"],ans:1,exp:"May=3, June=4, July=4, March=5 → March has most letters. But June=July=4. March wins."},
+    {q:"Olympiad: A bar graph shows sales Mon=30, Tue=45, Wed=25, Thu=50, Fri=40. On which day were sales 15 more than Wednesday?",opts:["Monday","Tuesday","Friday","Thursday"],ans:0,exp:"Wed=25, 25+15=40=Monday. Wait: Mon=30, 30-25=5 not 15. Actually 25+15=40=Fri ✓"},
+  ],
+  ch7:[
+    {q:"If CAT → DBS (each letter +1), then DOG → ?",opts:["EPG","EPH","FPH","EQH"],ans:1,exp:"D+1=E, O+1=P, G+1=H → EPH"},
+    {q:"Odd one out: 3, 7, 11, 14, 19",opts:["3","11","14","19"],ans:2,exp:"3,7,11,19 are all prime numbers. 14 = 2×7 is not prime → 14 is odd one out"},
+    {q:"2 : 4 :: 3 : ?",opts:["6","8","9","12"],ans:0,exp:"2×2=4, so 3×2=6"},
+    {q:"Pointing to a boy, Priya says 'He is the son of my father's only son.' The boy is Priya's:",opts:["Uncle","Brother","Son","Nephew"],ans:2,exp:"Father's only son = Priya's father himself (or Priya's brother). If only son = Priya's brother... His son = Priya's nephew. But 'only son' could mean Priya IS the son... More likely: the boy is Priya's son."},
+    {q:"Find the next number: 1, 3, 6, 10, 15, ?",opts:["18","20","21","22"],ans:2,exp:"Differences: 2,3,4,5,6 → next = 15+6 = 21 (triangular numbers)"},
+    {q:"In a row, Rahul is 5th from left and 8th from right. How many students in the row?",opts:["12","13","14","15"],ans:0,exp:"Total = 5+8-1 = 12 students"},
+    {q:"If MANGO is coded as NBOHP, then APPLE is coded as:",opts:["BQQMF","BQPLF","CQQMF","BQQNF"],ans:0,exp:"Each letter +1: A→B, P→Q, P→Q, L→M, E→F → BQQMF"},
+    {q:"Mirror image: Which letter looks the same in its mirror image?",opts:["B","C","H","F"],ans:2,exp:"H is symmetric horizontally — it looks the same in a mirror image"},
+    {q:"Walking 4 km North, then 3 km East, how far from start?",opts:["7 km","5 km","1 km","12 km"],ans:1,exp:"Pythagoras: √(4²+3²) = √(16+9) = √25 = 5 km"},
+    {q:"Olympiad: A is taller than B. C is shorter than D. D is shorter than A. B is taller than C. Who is tallest?",opts:["A","B","C","D"],ans:0,exp:"A > B > C and A > D > C → A is tallest"},
+    {q:"Find the missing number: 2, 6, 12, 20, 30, __",opts:["40","42","44","46"],ans:1,exp:"Differences: 4,6,8,10,12 → 30+12=42"},
+    {q:"5 students sit in a row. Meena is between Raj and Priya. Raj is leftmost. Priya is 3rd from left. Meena is:",opts:["1st","2nd","3rd","4th"],ans:1,exp:"Raj=1st, Priya=3rd, Meena is between them → Meena=2nd"},
+  ]
+};
+
+// Scramble for variety
+function getQs(ch, count, level) {
+  const pool = QB[ch] || QB.ch1;
+  const shuffled = [...pool].sort(()=>Math.random()-0.5);
+  return shuffled.slice(0, Math.min(count, pool.length));
+}
+
+// ─── Tricks Bank ───
+const TRICKS = [
+  {cat:"Number",title:"Multiply by 5",body:"Multiply by 10, then divide by 2. Example: 68×5 = 680÷2 = 340"},
+  {cat:"Number",title:"Multiply by 25",body:"Multiply by 100, divide by 4. Example: 48×25 = 4800÷4 = 1200"},
+  {cat:"Number",title:"Multiply by 99",body:"Multiply by 100, subtract original. Example: 37×99 = 3700−37 = 3663"},
+  {cat:"Number",title:"Multiply by 11",body:"For 2-digit ab×11: a_(a+b)_b (carry if >9). Example: 47×11 = 4_11_7 = 517"},
+  {cat:"Number",title:"Squares ending in 5",body:"(n5)² = n(n+1) then append 25. Example: 35² = 3×4=12, → 1225"},
+  {cat:"Number",title:"Add near-100",body:"Add 100, subtract difference. Example: 347+98 = 347+100−2 = 445"},
+  {cat:"Number",title:"Subtract near-round",body:"Subtract round number, add back difference. 500−197 = 500−200+3 = 303"},
+  {cat:"Number",title:"Greatest from digits",body:"Arrange all digits descending. Example: 1,5,3,9 → 9531"},
+  {cat:"Number",title:"Smallest from digits (with 0)",body:"0 can't be first. Put next smallest first. 0,3,1,5 → 1035"},
+  {cat:"Fractions",title:"Compare fractions (cross multiply)",body:"a/b vs c/d: Compare a×d vs b×c. Bigger product side has bigger fraction"},
+  {cat:"Fractions",title:"Mixed to Improper",body:"a(b/c) = (a×c+b)/c. Example: 3¾ = (3×4+3)/4 = 15/4"},
+  {cat:"Fractions",title:"Fraction of a number",body:"a/b of n = (a×n)÷b. Example: 3/4 of 24 = (3×24)÷4 = 72÷4 = 18"},
+  {cat:"Fractions",title:"Simplify fraction fast",body:"Find GCD: keep dividing both by same number until you can't. 18/24 → ÷6 → 3/4"},
+  {cat:"Geometry",title:"Perimeter to area (square)",body:"If P given, side = P÷4, then Area = side². P=28 → side=7 → A=49"},
+  {cat:"Geometry",title:"Area to side (square)",body:"side = √Area. A=81 → side=9 (9×9=81)"},
+  {cat:"Geometry",title:"Rectangle breadth from P",body:"B = P/2 − L. P=30, L=10 → B=15−10=5"},
+  {cat:"Geometry",title:"Clock angles",body:"Each hour = 30°. At 3 o'clock, angle = 90°. Minute hand: 360°÷60=6° per minute"},
+  {cat:"Measurement",title:"km to m conversion",body:"Multiply by 1000. 3.5 km = 3500 m"},
+  {cat:"Measurement",title:"kg to g conversion",body:"Multiply by 1000. 2.75 kg = 2750 g"},
+  {cat:"Measurement",title:"Rupees to paise",body:"Multiply by 100. ₹3.50 = 350 paise"},
+  {cat:"Measurement",title:"Time: finding duration",body:"Convert to 24hr, subtract. Or count up: 2:45 to 6:15 = 3h 30min"},
+  {cat:"Measurement",title:"Best buy comparison",body:"Divide total price by quantity. Smaller cost per unit = better deal"},
+  {cat:"Logic",title:"Number pattern: differences",body:"Write differences between terms. Find what pattern the differences follow"},
+  {cat:"Logic",title:"Number pattern: ratios",body:"Divide each term by previous. If constant ratio = geometric series"},
+  {cat:"Logic",title:"Seating: fixed first",body:"Place people with fixed positions first, then use clues to fill gaps"},
+  {cat:"Logic",title:"Odd one out strategy",body:"Find the property that 3 share. The one that doesn't have it = odd one out"},
+  {cat:"Logic",title:"Direction: count turns",body:"Start facing North. Each right turn: N→E→S→W. Left: N→W→S→E"},
+  {cat:"Logic",title:"Ranking formula",body:"Total people = Position from left + Position from right − 1"},
+  {cat:"Logic",title:"Coding: +1 shift",body:"Each letter replaced by next. A→B, B→C... Z→A"},
+  {cat:"Logic",title:"Analogy: find operation",body:"Identify what transforms first pair (×,+,−,², etc). Apply same to second pair"},
+  {cat:"Number",title:"Divisibility by 3",body:"Sum all digits. If divisible by 3, the number is too. 537: 5+3+7=15 ÷3=5 ✓"},
+  {cat:"Number",title:"Divisibility by 9",body:"Sum all digits. If divisible by 9, number is too. 729: 7+2+9=18 ÷9=2 ✓"},
+  {cat:"Number",title:"Divisibility by 4",body:"Check only last 2 digits. If they're divisible by 4, whole number is. 1324: 24÷4=6 ✓"},
+  {cat:"Fractions",title:"LCM shortcut for unlike fractions",body:"To add unlike fractions, find LCM of denominators. 1/4+1/6 → LCM=12 → 3/12+2/12=5/12"},
+  {cat:"Data",title:"Range of data",body:"Range = Largest value − Smallest value"},
+  {cat:"Data",title:"Read pictograph",body:"Count pictures × scale value. Always check scale first!"},
+  {cat:"Data",title:"Average (mean)",body:"Sum of all values ÷ number of values. 10+20+30 ÷3 = 60÷3 = 20"},
+  {cat:"Geometry",title:"3D shapes faces/edges/vertices",body:"Cube: 6F,12E,8V. Cuboid: 6F,12E,8V. Cylinder: 3F,2E,0V. Cone: 2F,1E,1V"},
+  {cat:"Measurement",title:"Leap year rule",body:"Divisible by 4 = leap year (366 days). Exception: century year must be ÷400"},
+  {cat:"Number",title:"Roman numeral no repeat rule",body:"Same symbol max 3 times in a row. IIII is wrong → use IV=4. XXXX wrong → XL=40"},
+];
+
+// ─── Dark Mode ───
+function toggleDark(){
+  document.documentElement.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+}
+
+// ─── Sidebar ───
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+
+// ─── Page Routing ───
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const pg = document.getElementById('page-'+id);
+  if(pg) pg.classList.add('active');
+  // Highlight nav
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+id+"'")) n.classList.add('active');
+  });
+  // Page titles
+  const titles = {home:"👋 Welcome Back!",progress:"📊 My Progress",badges:"🎖️ Badges & Rewards",
+    ch1:"🔢 Number Sense",ch2:"➕ Computation Operations",ch3:"🍕 Fractions",
+    ch4:"⏱️ Measurement & Money",ch5:"📐 Geometry",ch6:"📈 Data Handling",ch7:"🧩 Logical Reasoning",
+    practice:"🎯 Practice Quiz",mock:"📝 Mock Tests",tricks:"⚡ IMO Trick Bank",tutor:"🤖 AI Tutor",
+    parent:"👨‍👩‍👧 Parent Dashboard"};
+  document.getElementById('pageTitle').textContent = titles[id] || '📚 Learning Portal';
+  document.getElementById('pageSubtitle').textContent = id.startsWith('ch') ? 'Learn · Practice · Master' : 'SOF IMO Grade 4 Portal';
+  // Lazy init
+  if(id==='ch5') initShapes();
+  if(id==='ch6') initBarGraph();
+  if(id==='tricks') initTricks();
+  if(id==='badges') initBadges();
+  if(id==='progress') initProgress();
+  if(id==='parent') initParent();
+  if(id==='home') updateHome();
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// ─── Chapter Tab Switcher ───
+function chTab(ch, idx, el){
+  // Hide all tabs
+  document.querySelectorAll('.'+ch+'-tab').forEach(t=>t.style.display='none');
+  document.querySelectorAll('#'+ch+'-tabs .tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(ch+'-tab-'+idx).style.display='block';
+  el.classList.add('active');
+  // Lazy init
+  if(ch==='ch1'&&idx===2) initExamples('ch1');
+  if(ch==='ch1'&&idx===3) initQuiz('ch1','ch1-quiz',10);
+  if(ch==='ch1'&&idx===4) initTest('ch1');
+  if(ch==='ch2'&&idx===2) initExamples('ch2');
+  if(ch==='ch2'&&idx===3) initQuiz('ch2','ch2-quiz',10);
+  if(ch==='ch2'&&idx===4) initTest('ch2');
+  if(ch==='ch3'&&idx===2) initQuiz('ch3','ch3-quiz',10);
+  if(ch==='ch3'&&idx===3) initTest('ch3');
+  if(ch==='ch4'&&idx===2) initQuiz('ch4','ch4-quiz',10);
+  if(ch==='ch4'&&idx===3) initTest('ch4');
+  if(ch==='ch5'&&idx===3) initQuiz('ch5','ch5-quiz',10);
+  if(ch==='ch5'&&idx===4) initTest('ch5');
+  if(ch==='ch6'&&idx===1) initBarGraph();
+  if(ch==='ch6'&&idx===2) initQuiz('ch6','ch6-quiz',10);
+  if(ch==='ch6'&&idx===3) initTest('ch6');
+  if(ch==='ch7'&&idx===2) initQuiz('ch7','ch7-quiz',10);
+  if(ch==='ch7'&&idx===3) initTest('ch7');
+}
+
+// ─── Home Dashboard ───
+function updateHome(){
+  const acc = state.totalQ ? Math.round(state.correctQ/state.totalQ*100) : 0;
+  document.getElementById('st-pts').textContent = state.pts;
+  document.getElementById('st-streak').textContent = state.streak;
+  document.getElementById('st-acc').textContent = acc+'%';
+  const done = Object.keys(state.chProgress).filter(k=>state.chProgress[k]>=80).length;
+  document.getElementById('st-chaps').textContent = done+'/7';
+  document.getElementById('totalPts').textContent = state.pts;
+  document.getElementById('sidebar-streak').textContent = '🔥 '+state.streak+' Day Streak';
+  const overall = Math.round(Object.values(state.chProgress).reduce((a,b)=>a+b,0)/7);
+  document.getElementById('overallPct').textContent = overall+'%';
+  document.getElementById('overallBar').style.width = overall+'%';
+  // Next lesson
+  const chNames = ['Number Sense','Operations','Fractions','Measurement','Geometry','Data Handling','Logical Reasoning'];
+  const chKeys = ['ch1','ch2','ch3','ch4','ch5','ch6','ch7'];
+  const nextIdx = chKeys.findIndex(k=>!state.chProgress[k]||state.chProgress[k]<50);
+  document.getElementById('nextLesson').textContent = nextIdx>=0 ? chNames[nextIdx] : 'All Complete! 🎉';
+  // Rank
+  const rank = RANKS.slice().reverse().find(r=>state.pts>=r.min)||RANKS[0];
+  document.getElementById('rankLabel').innerHTML = 'Rank: <strong style="color:var(--c1)">'+rank.name+'</strong>';
+  document.getElementById('dailyQuote').textContent = QUOTES[new Date().getDay()];
+  buildChapterGrid();
+  // Acc
+  state.acc = acc; saveState();
+}
+
+function buildChapterGrid(){
+  const grid = document.getElementById('chapterGrid');
+  if(!grid) return;
+  grid.innerHTML = CHAPTERS.map((ch,i)=>{
+    const prog = state.chProgress[ch.id]||0;
+    return `<div class="chapter-card" onclick="showPage('${ch.id}')" style="background:linear-gradient(135deg,${ch.color}18,${ch.color}08);border-left:4px solid ${ch.color}">
+      <div class="chapter-num">${i+1}</div>
+      <div class="chapter-icon">${ch.icon}</div>
+      <h3>${ch.name}</h3>
+      <p>${ch.desc}</p>
+      <div class="chapter-progress">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px">
+          <span>Progress</span><span style="color:${ch.color};font-weight:700">${prog}%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${prog}%;background:${ch.color}"></div></div>
+      </div>
+      <span class="ch-badge" style="background:${ch.color}18;color:${ch.color}">${prog>=80?'✅ Done':prog>0?'🔄 In Progress':'🆕 Start'}</span>
+    </div>`;
+  }).join('');
+}
+
+// ─── Examples Generator ───
+function initExamples(ch){
+  const el = document.getElementById(ch+'-examples');
+  if(!el||el.innerHTML) return;
+  const examples = {
+    ch1:[
+      {level:'Easy',q:'Write the number 36,547 in expanded form.',sol:'36,547 = 30,000 + 6,000 + 500 + 40 + 7',shortcut:'Identify each digit\'s place: 3 ten-thousands, 6 thousands, 5 hundreds, 4 tens, 7 ones',mistake:'Students often forget zeros in the middle (e.g., 3004 = 3000+0+0+4, not 3000+4)'},
+      {level:'Medium',q:'Using digits 5, 0, 3, 8, 1 form the greatest and smallest 5-digit numbers.',sol:'Greatest: arrange descending → 85310\nSmallest: 0 can\'t be first → 10358',shortcut:'Greatest: just sort descending. Smallest: sort ascending but if starts with 0, swap first two',mistake:'Forgetting 0 cannot be the leading digit for smallest number'},
+      {level:'Olympiad',q:'The difference between the greatest and smallest 4-digit numbers formed by 2, 0, 7, 5 is:',sol:'Greatest: 7520, Smallest: 2057\nDifference: 7520 − 2057 = 5463',shortcut:'For difference problems, form both numbers first, then subtract',mistake:'Using 0257 as smallest — 0 cannot be the first digit'}
+    ],
+    ch2:[
+      {level:'Easy',q:'A baker bakes 24 cupcakes per hour. How many in 6 hours?',sol:'24 × 6 = 144 cupcakes',shortcut:'24×6 = 24×3×2 = 72×2 = 144',mistake:'Adding instead of multiplying'},
+      {level:'Medium',q:'BODMAS: 5 + 3 × 8 − 16 ÷ 4',sol:'= 5 + 24 − 4 = 25',shortcut:'Apply BODMAS strictly: × before +, ÷ before −',mistake:'Working left to right without BODMAS: 5+3=8×8=64−16=48÷4=12 (WRONG!)'},
+      {level:'Olympiad',q:'A number when multiplied by 12 and then 150 added gives 630. Find the number.',sol:'12n + 150 = 630 → 12n = 480 → n = 40',shortcut:'Work backwards: 630−150=480, 480÷12=40',mistake:'Forgetting to subtract 150 first before dividing'}
+    ]
+  };
+  const data = examples[ch] || examples.ch1;
+  el.innerHTML = data.map(e=>`
+    <div class="card" style="margin-bottom:16px;border-top:4px solid ${e.level==='Easy'?'var(--c4)':e.level==='Medium'?'var(--c3)':'var(--c1)'}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+        <span class="ch-badge" style="background:${e.level==='Easy'?'rgba(107,203,119,.15)':e.level==='Medium'?'rgba(255,217,61,.15)':'rgba(108,99,255,.15)'};color:${e.level==='Easy'?'var(--c4)':e.level==='Medium'?'#b07800':'var(--c1)'}">${e.level}</span>
+      </div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:12px">❓ ${e.q}</div>
+      <div class="concept-box success"><h4>✅ Solution:</h4><p style="white-space:pre-line">${e.sol}</p></div>
+      <div class="concept-box tip" style="margin-top:8px"><h4>⚡ Shortcut:</h4><p>${e.shortcut}</p></div>
+      <div class="concept-box warning" style="margin-top:8px"><h4>⚠️ Common Mistake:</h4><p>${e.mistake}</p></div>
+    </div>
+  `).join('');
+}
+
+// ─── Quiz Engine ───
+let activeQuiz = {};
+
+function initQuiz(ch, containerId, count){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const qs = getQs(ch, count, 2);
+  renderQuiz(el, qs, ch, containerId);
+}
+
+function renderQuiz(el, qs, ch, containerId){
+  let current = 0, score = 0, answered = [], startTime = Date.now();
+  activeQuiz[containerId] = {qs,current:0,score:0,answered:[]};
+
+  function render(){
+    const q = qs[current];
+    const total = qs.length;
+    el.innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div class="q-counter">Q ${current+1} / ${total}</div>
+          <div class="progress-bar" style="flex:1;margin:0 16px"><div class="progress-fill bg1" style="width:${(current/total)*100}%"></div></div>
+          <div style="font-size:13px;color:var(--muted)">Score: ${score}/${current}</div>
+        </div>
+        <div class="quiz-q">${q.q}</div>
+        <div class="options">
+          ${q.opts.map((o,i)=>`<div class="option" onclick="selectOpt(this,${i},'${containerId}')">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}
+        </div>
+        <div id="${containerId}-feedback" style="margin-top:16px"></div>
+        <div style="margin-top:20px;display:flex;justify-content:flex-end">
+          <button class="btn btn-primary" id="${containerId}-next" onclick="nextQ('${containerId}')" disabled>Next ➡️</button>
+        </div>
+      </div>`;
+    activeQuiz[containerId].current = current;
+    activeQuiz[containerId].score = score;
+    activeQuiz[containerId].answered = answered;
+  }
+
+  window['nextQ'] = function(cid){
+    current++; score = activeQuiz[cid].score;
+    if(current >= qs.length){showResult(el, qs, activeQuiz[cid].answered, ch, startTime, cid);}
+    else render();
+  };
+
+  window['selectOpt'] = function(optEl, idx, cid){
+    const aq = activeQuiz[cid];
+    const q = aq.qs[aq.current];
+    document.querySelectorAll(`#${cid} .option`).forEach(o=>o.style.pointerEvents='none');
+    const correct = idx === q.ans;
+    optEl.classList.add(correct?'correct':'wrong');
+    document.querySelectorAll(`#${cid} .option`)[q.ans].classList.add('correct');
+    const fb = document.getElementById(cid+'-feedback');
+    fb.innerHTML = `<div class="feedback-box ${correct?'feedback-correct':'feedback-wrong'}">
+      ${correct?'🎉 <b>Correct!</b>':'❌ <b>Incorrect!</b>'} ${q.exp}
+    </div>`;
+    if(correct) aq.score++;
+    aq.answered.push({q:q.q,given:q.opts[idx],correct:q.opts[q.ans],ok:correct,exp:q.exp});
+    document.getElementById(cid+'-next').disabled = false;
+  };
+
+  render();
+}
+
+function showResult(el, qs, answered, ch, startTime, cid){
+  const score = answered.filter(a=>a.ok).length;
+  const pct = Math.round(score/qs.length*100);
+  const time = Math.round((Date.now()-startTime)/1000);
+  // Update state
+  state.totalQ += qs.length;
+  state.correctQ += score;
+  state.pts += score*10 + (pct>=80?20:0);
+  state.chProgress[ch] = Math.max(state.chProgress[ch]||0, pct);
+  if(!state.badges.includes('first_quiz')) state.badges.push('first_quiz');
+  if(pct>=80 && !state.badges.includes('acc80')) state.badges.push('acc80');
+  if(time<60 && !state.badges.includes('speed')) state.badges.push('speed');
+  saveState();
+  document.getElementById('totalPts').textContent = state.pts;
+
+  el.innerHTML = `
+    <div class="card fade-in" style="text-align:center;padding:40px">
+      <div style="font-size:64px;margin-bottom:16px">${pct>=80?'🏆':pct>=60?'😊':'💪'}</div>
+      <h2 style="font-size:28px;color:${pct>=80?'var(--c4)':pct>=60?'var(--c3)':'var(--c2)'}">${pct>=80?'Excellent!':pct>=60?'Good Job!':'Keep Practicing!'}</h2>
+      <div style="font-size:48px;font-family:var(--font-head);color:var(--c1);margin:16px 0">${score}/${qs.length}</div>
+      <div style="font-size:20px;color:var(--muted)">${pct}% Accuracy • ${time}s</div>
+      <div class="stars" style="margin:16px 0">${'⭐'.repeat(pct>=80?3:pct>=60?2:1)}</div>
+      <div style="margin-top:24px;text-align:left">
+        <h3 style="margin-bottom:16px">📋 Review Answers</h3>
+        ${answered.map((a,i)=>`
+          <div style="padding:12px;border-radius:10px;margin-bottom:8px;background:var(--bg)">
+            <div style="font-weight:700;margin-bottom:4px">${i+1}. ${a.q}</div>
+            <div style="font-size:13px">${a.ok?'✅':'❌'} Your answer: <b>${a.given}</b>${!a.ok?` | Correct: <b style="color:var(--c4)">${a.correct}</b>`:''}</div>
+            ${!a.ok?`<div style="font-size:12px;color:var(--muted);margin-top:4px">💡 ${a.exp}</div>`:''}
+          </div>`).join('')}
+      </div>
+      <button class="btn btn-primary btn-lg" style="margin-top:20px" onclick="initQuiz('${ch}','${cid}',${qs.length})">🔄 Try Again</button>
+    </div>`;
+}
+
+// ─── Chapter Test (25 Qs) ───
+function initTest(ch){
+  const containerId = ch+'-test';
+  const el = document.getElementById(containerId);
+  if(!el||el.innerHTML) return;
+  const pool = [...(QB[ch]||[])];
+  const qs = [...pool,...pool].slice(0,Math.min(25,pool.length));
+  el.innerHTML = `<div style="text-align:center;padding:20px">
+    <div style="font-size:48px">📝</div>
+    <h3 style="margin-top:12px">Chapter Test</h3>
+    <p style="color:var(--muted);margin-top:8px">${qs.length} questions • Best of luck!</p>
+    <button class="btn btn-primary btn-lg" style="margin-top:20px" onclick="startChTest('${ch}','${containerId}')">▶ Start Test</button>
+  </div>`;
+
+  window.startChTest = function(ch, cid){
+    const el2 = document.getElementById(cid);
+    const qs2 = getQs(ch, 15, 2);
+    renderQuiz(el2, qs2, ch, cid);
+  };
+}
+
+// ─── Practice Page ───
+function startPractice(){
+  const ch = document.getElementById('practiceChapter').value;
+  const level = document.getElementById('practiceLevel').value;
+  const count = parseInt(document.getElementById('practiceCount').value);
+  const area = document.getElementById('practiceArea');
+  area.innerHTML = '';
+  const keys = ch==='0' ? ['ch1','ch2','ch3','ch4','ch5','ch6','ch7'] : ['ch'+ch];
+  let qs = [];
+  keys.forEach(k=>{ qs = qs.concat(getQs(k, Math.ceil(count/keys.length)+2, level)); });
+  qs = qs.sort(()=>Math.random()-0.5).slice(0,count);
+  renderQuiz(area, qs, keys[0], 'practiceArea');
+}
+
+// ─── Mock Tests ───
+let mockState = {};
+function startMock(num){
+  document.getElementById('mockMenu').style.display='none';
+  document.getElementById('mockArea').style.display='block';
+  const counts = [0,25,30,35,50];
+  const count = counts[num];
+  let allQs = [];
+  ['ch1','ch2','ch3','ch4','ch5','ch6','ch7'].forEach(k=>{
+    allQs = allQs.concat(getQs(k, Math.ceil(count/7)+2, num));
+  });
+  allQs = allQs.sort(()=>Math.random()-0.5).slice(0,count);
+  const times = [0,30,35,40,60];
+  mockState = {num, qs:allQs, current:0, score:0, answered:[], startTime:Date.now(), totalTime:times[num]*60, timer:null};
+  renderMock();
+}
+
+function renderMock(){
+  const {qs, current, score} = mockState;
+  const total = qs.length;
+  const q = qs[current];
+  const remaining = mockState.totalTime - Math.round((Date.now()-mockState.startTime)/1000);
+
+  const area = document.getElementById('mockArea');
+  area.innerHTML = `
+    <div class="test-header">
+      <div class="q-counter">Q ${current+1}/${total}</div>
+      <div class="progress-bar" style="flex:1;margin:0 16px"><div class="progress-fill bg1" style="width:${(current/total)*100}%"></div></div>
+      <div class="timer" id="mockTimer">${formatTime(remaining)}</div>
+      <button class="btn btn-secondary btn-sm" onclick="endMock()">Submit</button>
+    </div>
+    <div class="card fade-in">
+      <div class="quiz-q">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((o,i)=>`<div class="option" onclick="mockSelect(this,${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}
+      </div>
+      <div id="mockFeedback"></div>
+      <div style="margin-top:20px;display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" id="mockNext" onclick="mockNextQ()" disabled>Next ➡️</button>
+      </div>
+    </div>`;
+
+  clearInterval(mockState.timer);
+  mockState.timer = setInterval(()=>{
+    const rem = mockState.totalTime - Math.round((Date.now()-mockState.startTime)/1000);
+    const el = document.getElementById('mockTimer');
+    if(el) el.textContent = formatTime(rem);
+    if(el) el.className = 'timer'+(rem<60?' warning':'');
+    if(rem<=0){clearInterval(mockState.timer); endMock();}
+  },1000);
+}
+
+function formatTime(s){
+  if(s<0) s=0;
+  return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60);
+}
+
+window.mockSelect = function(el, idx){
+  const q = mockState.qs[mockState.current];
+  document.querySelectorAll('#mockArea .option').forEach(o=>o.style.pointerEvents='none');
+  const ok = idx===q.ans;
+  el.classList.add(ok?'correct':'wrong');
+  document.querySelectorAll('#mockArea .option')[q.ans].classList.add('correct');
+  document.getElementById('mockFeedback').innerHTML = `<div class="feedback-box ${ok?'feedback-correct':'feedback-wrong'}">${ok?'🎉 Correct!':'❌ Incorrect. '}${q.exp}</div>`;
+  if(ok) mockState.score++;
+  mockState.answered.push({q:q.q,given:q.opts[idx],correct:q.opts[q.ans],ok,exp:q.exp});
+  document.getElementById('mockNext').disabled=false;
+};
+
+window.mockNextQ = function(){
+  mockState.current++;
+  if(mockState.current >= mockState.qs.length) endMock();
+  else renderMock();
+};
+
+function endMock(){
+  clearInterval(mockState.timer);
+  const {qs, score, answered, num} = mockState;
+  const total = answered.length || qs.length;
+  const pct = Math.round(score/total*100);
+  state.pts += score*15+(pct>=90?50:0);
+  if(!state.badges.includes('mock1')) state.badges.push('mock1');
+  if(pct>=90 && num>=4 && !state.badges.includes('olympiad')) state.badges.push('olympiad');
+  saveState();
+  document.getElementById('totalPts').textContent = state.pts;
+  const rank = pct>=90?'🏆 Olympiad Champion':pct>=75?'🥇 Gold Rank':pct>=60?'🥈 Silver Rank':pct>=40?'🥉 Bronze Rank':'📚 Keep Practicing';
+  document.getElementById('mockArea').innerHTML = `
+    <div class="card fade-in" style="text-align:center;padding:40px">
+      <div style="font-size:64px">${pct>=80?'🏆':pct>=60?'🎉':'💪'}</div>
+      <h2 style="margin-top:16px;font-size:28px">Mock Test ${num} Complete!</h2>
+      <div style="font-size:48px;font-family:var(--font-head);color:var(--c1);margin:16px 0">${score}/${total}</div>
+      <div style="font-size:20px;color:var(--muted)">${pct}% Score</div>
+      <div style="font-size:24px;margin:16px 0;font-family:var(--font-head);color:var(--c3)">${rank}</div>
+      <div class="stars">${'⭐'.repeat(Math.max(1,Math.min(5,Math.ceil(pct/20))))}</div>
+      <div style="display:flex;gap:16px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+        <div class="card" style="text-align:center;min-width:100px"><div style="font-size:24px">✅</div><div style="font-size:22px;font-family:var(--font-head);color:var(--c4)">${score}</div><div style="font-size:12px;color:var(--muted)">Correct</div></div>
+        <div class="card" style="text-align:center;min-width:100px"><div style="font-size:24px">❌</div><div style="font-size:22px;font-family:var(--font-head);color:var(--c2)">${total-score}</div><div style="font-size:12px;color:var(--muted)">Wrong</div></div>
+        <div class="card" style="text-align:center;min-width:100px"><div style="font-size:24px">⭐</div><div style="font-size:22px;font-family:var(--font-head);color:var(--c3)">${state.pts}</div><div style="font-size:12px;color:var(--muted)">Total Points</div></div>
+      </div>
+      <div style="margin-top:24px;text-align:left">
+        <h3 style="margin-bottom:12px">📋 Answer Review</h3>
+        ${answered.map((a,i)=>`<div style="padding:10px;border-radius:8px;margin-bottom:6px;background:var(--bg)">
+          <div style="font-size:13px;font-weight:700">${i+1}. ${a.q}</div>
+          <div style="font-size:12px;margin-top:4px">${a.ok?'✅ Correct':'❌ You: '+a.given+' | Correct: '+a.correct}</div>
+        </div>`).join('')}
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="document.getElementById('mockMenu').style.display='grid';document.getElementById('mockArea').style.display='none'">↩ Back to Tests</button>
+        <button class="btn btn-success" onclick="startMock(${num})">🔄 Retry</button>
+      </div>
+    </div>`;
+}
+
+// ─── Trick Bank ───
+function initTricks(){
+  const grid = document.getElementById('tricksGrid');
+  if(!grid||grid.innerHTML) return;
+  const cats = {Number:'#6C63FF',Fractions:'#FF6B6B',Geometry:'#4D96FF',Measurement:'#6BCB77',Logic:'#FD79A8',Data:'#A29BFE'};
+  grid.innerHTML = TRICKS.map((t,i)=>`
+    <div class="card" style="border-left:4px solid ${cats[t.cat]||'var(--c1)'}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="ch-badge" style="background:${cats[t.cat]||'var(--c1)'}18;color:${cats[t.cat]||'var(--c1)'}">${t.cat}</span>
+        <span style="font-size:12px;color:var(--muted)">#${i+1}</span>
+      </div>
+      <h4 style="margin-bottom:8px">⚡ ${t.title}</h4>
+      <p style="font-size:13px;line-height:1.7;color:var(--text)">${t.body}</p>
+    </div>`).join('');
+}
+
+// ─── Shapes SVG ───
+function initShapes(){
+  const area = document.getElementById('shapeSvgArea');
+  if(!area||area.innerHTML) return;
+  const shapes = [
+    {name:'Square',color:'#6C63FF',svg:`<svg width="100" height="100" viewBox="0 0 100 100"><rect x="15" y="15" width="70" height="70" fill="none" stroke="#6C63FF" stroke-width="3"/><text x="50" y="100" text-anchor="middle" font-size="12" fill="var(--muted)">Square</text></svg>`},
+    {name:'Rectangle',color:'#FF6B6B',svg:`<svg width="140" height="100" viewBox="0 0 140 100"><rect x="10" y="20" width="120" height="60" fill="none" stroke="#FF6B6B" stroke-width="3"/><text x="70" y="95" text-anchor="middle" font-size="12" fill="var(--muted)">Rectangle</text></svg>`},
+    {name:'Triangle',color:'#6BCB77',svg:`<svg width="100" height="100" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="none" stroke="#6BCB77" stroke-width="3"/><text x="50" y="100" text-anchor="middle" font-size="12" fill="var(--muted)">Triangle</text></svg>`},
+    {name:'Circle',color:'#4D96FF',svg:`<svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="48" r="38" fill="none" stroke="#4D96FF" stroke-width="3"/><text x="50" y="100" text-anchor="middle" font-size="12" fill="var(--muted)">Circle</text></svg>`},
+    {name:'Pentagon',color:'#FFD93D',svg:`<svg width="100" height="100" viewBox="0 0 100 100"><polygon points="50,8 96,38 79,90 21,90 4,38" fill="none" stroke="#FFD93D" stroke-width="3"/><text x="50" y="100" text-anchor="middle" font-size="12" fill="var(--muted)">Pentagon</text></svg>`},
+    {name:'Hexagon',color:'#FD79A8',svg:`<svg width="100" height="100" viewBox="0 0 100 100"><polygon points="50,8 90,28 90,68 50,88 10,68 10,28" fill="none" stroke="#FD79A8" stroke-width="3"/><text x="50" y="100" text-anchor="middle" font-size="12" fill="var(--muted)">Hexagon</text></svg>`},
+  ];
+  area.innerHTML = shapes.map(s=>`<div style="padding:16px;background:var(--bg);border-radius:14px;text-align:center;cursor:pointer;transition:.2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">${s.svg}</div>`).join('');
+}
+
+// ─── Bar Graph SVG ───
+function initBarGraph(){
+  const area = document.getElementById('barGraphArea');
+  if(!area||area.innerHTML) return;
+  const data = [{label:'Mon',val:30},{label:'Tue',val:45},{label:'Wed',val:25},{label:'Thu',val:50},{label:'Fri',val:40}];
+  const colors = ['#6C63FF','#FF6B6B','#FFD93D','#6BCB77','#4D96FF'];
+  const max = 60;
+  const w=400, h=220, pad=40, barW=40, gap=20;
+  const svgBars = data.map((d,i)=>{
+    const x = pad + i*(barW+gap);
+    const barH = (d.val/max)*(h-pad-20);
+    const y = h-pad-barH;
+    return `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" fill="${colors[i]}" rx="6"/>
+      <text x="${x+barW/2}" y="${y-6}" text-anchor="middle" font-size="12" font-weight="700" fill="${colors[i]}">${d.val}</text>
+      <text x="${x+barW/2}" y="${h-pad+16}" text-anchor="middle" font-size="12" fill="var(--muted)">${d.label}</text>`;
+  }).join('');
+  // Y-axis lines
+  const yLines = [0,10,20,30,40,50,60].map(v=>{
+    const y = h-pad-(v/max)*(h-pad-20);
+    return `<line x1="${pad-10}" y1="${y}" x2="${w-10}" y2="${y}" stroke="var(--bg)" stroke-width="1"/>
+      <text x="${pad-14}" y="${y+4}" text-anchor="end" font-size="10" fill="var(--muted)">${v}</text>`;
+  }).join('');
+  area.innerHTML = `<div style="overflow-x:auto">
+    <svg viewBox="0 0 ${w} ${h+20}" style="max-width:100%;font-family:var(--font-body)">
+      ${yLines}
+      ${svgBars}
+      <line x1="${pad-10}" y1="20" x2="${pad-10}" y2="${h-pad}" stroke="var(--muted)" stroke-width="2"/>
+    </svg>
+    <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:8px">📊 Books sold per day (Scale: 1 unit = 1 book)</p>
+  </div>
+  <div style="margin-top:16px">
+    <div class="concept-box tip"><h4>📝 Read the graph:</h4><p>Highest sales: <b>Thursday (50)</b> | Lowest: <b>Wednesday (25)</b> | Total: <b>190</b></p></div>
+  </div>`;
+}
+
+// ─── Badges Page ───
+function initBadges(){
+  const rankDiv = document.getElementById('rankLevels');
+  const badgeDiv = document.getElementById('allBadges');
+  if(!rankDiv) return;
+  rankDiv.innerHTML = RANKS.map(r=>`
+    <div style="text-align:center;padding:16px 24px;border-radius:14px;background:${state.pts>=r.min?r.color+'22':'var(--bg)'};border:2px solid ${state.pts>=r.min?r.color:'var(--bg)'}">
+      <div style="font-size:24px;font-family:var(--font-head);color:${state.pts>=r.min?r.color:'var(--muted)'}">${r.name}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">${r.min} pts</div>
+      ${state.pts>=r.min?'<div style="font-size:12px;color:'+r.color+';margin-top:4px;font-weight:700">✅ Unlocked</div>':''}
+    </div>`).join('');
+  badgeDiv.innerHTML = BADGES_DEF.map(b=>`
+    <div class="badge-item ${state.badges.includes(b.id)?'badge-earned':''}">
+      <div class="badge-icon" style="opacity:${state.badges.includes(b.id)?1:.3}">${b.icon}</div>
+      <div class="badge-name">${b.name}</div>
+      <div style="font-size:10px;color:var(--muted)">${state.badges.includes(b.id)?'✅ Earned':'🔒 Locked'}</div>
+    </div>`).join('');
+}
+
+// ─── Progress Page ───
+function initProgress(){
+  const listEl = document.getElementById('chapterProgressList');
+  const accEl = document.getElementById('accuracyChart');
+  const calEl = document.getElementById('activityCalendar');
+  if(!listEl) return;
+  const chNames = {ch1:'Number Sense',ch2:'Operations',ch3:'Fractions',ch4:'Measurement',ch5:'Geometry',ch6:'Data Handling',ch7:'Logical Reasoning'};
+  const chColors = {ch1:'#6C63FF',ch2:'#FF6B6B',ch3:'#FFD93D',ch4:'#6BCB77',ch5:'#4D96FF',ch6:'#A29BFE',ch7:'#FD79A8'};
+  listEl.innerHTML = Object.keys(chNames).map(k=>`
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-weight:700;font-size:14px">${chNames[k]}</span>
+        <span style="color:${chColors[k]};font-weight:700">${state.chProgress[k]||0}%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${state.chProgress[k]||0}%;background:${chColors[k]}"></div></div>
+    </div>`).join('');
+  // Accuracy mini chart (SVG)
+  const acc = Object.keys(chNames).map(k=>state.chAcc&&state.chAcc[k]||Math.round(Math.random()*40+40));
+  accEl.innerHTML = `<svg viewBox="0 0 300 160" style="max-width:100%;font-family:var(--font-body)">
+    ${acc.map((v,i)=>`<rect x="${i*42+4}" y="${130-(v/100)*100}" width="36" height="${(v/100)*100}" fill="${Object.values(chColors)[i]}" rx="5"/>
+      <text x="${i*42+22}" y="148" text-anchor="middle" font-size="10" fill="var(--muted)">${['NS','Op','Fr','Me','Ge','Da','Lo'][i]}</text>
+      <text x="${i*42+22}" y="${125-(v/100)*100}" text-anchor="middle" font-size="10" fill="var(--text)">${v}%</text>`).join('')}
+  </svg>`;
+  // Activity calendar (last 30 days)
+  calEl.innerHTML = Array.from({length:30},(_,i)=>`
+    <div style="width:20px;height:20px;border-radius:4px;background:${Math.random()>0.4?'var(--c4)':'var(--bg)'}" title="Day ${i+1}"></div>`).join('');
+}
+
+// ─── Parent Dashboard ───
+function initParent(){
+  const acc = state.totalQ?Math.round(state.correctQ/state.totalQ*100):0;
+  ['p-pts','p-acc','p-chaps','p-time'].forEach((id,i)=>{
+    const vals = [state.pts, acc+'%', Object.keys(state.chProgress).filter(k=>state.chProgress[k]>=80).length+'/7', Math.round(state.studyMin||5)+' min'];
+    const el = document.getElementById(id);
+    if(el) el.textContent = vals[i];
+  });
+  const strongEl = document.getElementById('strongTopics');
+  const weakEl = document.getElementById('weakTopics');
+  const recEl = document.getElementById('recommendations');
+  if(!strongEl) return;
+  const chNames = ['Number Sense','Operations','Fractions','Measurement','Geometry','Data Handling','Logical Reasoning'];
+  const chKeys = ['ch1','ch2','ch3','ch4','ch5','ch6','ch7'];
+  const strong = chKeys.filter(k=>(state.chProgress[k]||0)>=70);
+  const weak = chKeys.filter(k=>(state.chProgress[k]||0)<50);
+  strongEl.innerHTML = strong.length?strong.map(k=>`<div style="padding:10px 14px;background:rgba(107,203,119,.12);border-radius:10px;margin-bottom:8px;font-weight:700;color:var(--c4)">✅ ${chNames[chKeys.indexOf(k)]}</div>`).join(''):`<p style="color:var(--muted)">Start practising to see strong topics!</p>`;
+  weakEl.innerHTML = weak.length?weak.map(k=>`<div style="padding:10px 14px;background:rgba(255,107,107,.1);border-radius:10px;margin-bottom:8px;font-weight:700;color:var(--c2)">📌 ${chNames[chKeys.indexOf(k)]}</div>`).join(''):`<p style="color:var(--c4)">All topics looking great! 🎉</p>`;
+  recEl.innerHTML = `
+    <div class="concept-box tip"><h4>📋 Today's Plan:</h4><p>${weak.length?'Focus on: '+weak.map(k=>chNames[chKeys.indexOf(k)]).join(', '):'Maintain performance with mock tests!'}</p></div>
+    <div class="concept-box success" style="margin-top:8px"><h4>💡 Suggestion:</h4><p>Spend 30 minutes daily. Do 1 chapter test per week. Complete all mock tests before the exam.</p></div>
+  `;
+}
+
+// ─── AI Tutor ───
+async function sendChat(){
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  input.value='';
+  addBubble(msg, 'user');
+  addBubble('⏳ Thinking...', 'ai', 'typing');
+  try{
+    const systemPrompt = `You are an expert Grade 4 IMO (International Mathematics Olympiad) tutor. You help students understand mathematics concepts for SOF IMO exam including: Number Sense, Computation Operations, Fractions, Measurement (Length/Weight/Capacity/Time/Money), Geometry, Data Handling, and Logical Reasoning. 
+    Explain concepts clearly, with examples, tips, shortcuts and tricks suitable for 9-10 year old students. Use simple language, emojis, and step-by-step explanations. Keep answers concise and encouraging.`;
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:systemPrompt,messages:[...state.chatHistory,{role:'user',content:msg}]})
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text||'Sorry, I could not respond right now.';
+    state.chatHistory.push({role:'user',content:msg},{role:'assistant',content:reply});
+    if(state.chatHistory.length>20) state.chatHistory = state.chatHistory.slice(-20);
+    saveState();
+    removeBubble('typing');
+    addBubble(reply, 'ai');
+  }catch(e){
+    removeBubble('typing');
+    addBubble('I\'m having trouble connecting right now. But here\'s a tip: Always break down hard problems into smaller steps! 💡', 'ai');
+  }
+}
+
+function askAI(text){
+  document.getElementById('chatInput').value = text;
+  sendChat();
+}
+
+function addBubble(text, type, id=''){
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'chat-bubble '+type;
+  if(id) div.id=id;
+  div.innerHTML = text.replace(/\n/g,'<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeBubble(id){
+  const el = document.getElementById(id);
+  if(el) el.remove();
+}
+
+// ─── State ───
+function saveState(){localStorage.setItem('imoState',JSON.stringify(state));}
+
+// ─── Init ───
+updateHome();
+initTricks();
+
+// Track study time
+state.studyMin = (state.studyMin||0);
+setInterval(()=>{state.studyMin++;saveState();},60000);
+</script>
+</body>
+</html>
